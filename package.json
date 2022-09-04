@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "deploy": "gh-pages -d src"
   },
   "repository": {
     "type": "git",
@@ -22,5 +22,8 @@
     "dotenv": "^16.0.2",
     "fetch-node": "^0.0.1",
     "require": "^2.4.20"
+  },
+  "devDependencies": {
+    "gh-pages": "^4.0.0"
   }
 }
