@@ -1,0 +1,25 @@
+{
+  "name": "tryp-partners-dashboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arturoTryp/tryp-partners-dashboard.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arturoTryp/tryp-partners-dashboard/issues"
+  },
+  "homepage": "https://github.com/arturoTryp/tryp-partners-dashboard#readme",
+  "dependencies": {
+    "airtable": "^0.11.4",
+    "fetch-node": "^0.0.1",
+    "require": "^2.4.20"
+  }
+}
