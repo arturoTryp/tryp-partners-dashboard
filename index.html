@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./assets/main.css" />
+    <title>Tryp - Vendors Dashboard</title>
+  </head>
+  <body>
+    <!--Login From Begin-->
+    <div class="login" id="login-form-container">
+      <div class="form-container">
+        <img src="./img/trypLogo.png" alt="logo" class="logo" />
+        <p style="text-align: center; font-family:Avenir-black">
+          Dashboard para Vendedores
+        </p>
+
+        <form class="form" id="login-form">
+          <label for="email">Email</label>
+          <input
+            type="text"
+            class="input input-email"
+            id="email"
+            placeholder="test@gmail.com"
+          />
+
+          <label for="sencondPassword">Password</label>
+          <input
+            type="password"
+            class="input input-password"
+            id="password"
+            placeholder="Type your password"
+          />
+
+          <input
+            type="submit"
+            value="Iniciar Sesión"
+            class="primary-button login-button"
+            id="submitBtn"
+          />
+        </form>
+
+        <button class="forgot-password">
+          ¿Olvide mi contraseña?
+        </button>
+      </div>
+    </div>
+    <!--Login From END-->
+
+    <div class="container-fluid inactive" id="main-container">
+      <!--Info header Container-->
+      <div class="row header-data">
+        <div class="col" id="vendor-name">Partner Name</div>
+        <div class="col" id="pay-date">Corte Actual</div>
+      </div>
+
+      <!--Highlights Container-->
+      <div class="row highlights-row">
+        <div class="col col-highlights">
+          <h2 id="total-sold">$500</h2>
+          <span>Total vendido este periodo</span>
+        </div>
+
+        <div class="col col-highlights">
+          <h2 id="total-earnings">$500</h2>
+          <span>Ingresos a recibir este periodo</span>
+        </div>
+
+        <div class="col col-highlights">
+          <h2 id="pieces-amount">300</h2>
+          <span>Articulos vendidos</span>
+        </div>
+      </div>
+
+      <!--End Highlights Container-->
+
+      <div class="row m-5"></div>
+
+      <!--Botones-->
+      <div class="table-container">
+        <div class="d-flex flex-row-reverse bd-highlight">
+          <div class="p-2 bd-highlight">
+            <button
+              type="button"
+              class="btn btn-outline-success"
+              id="download-csv-inventory"
+            >
+              CSV
+            </button>
+          </div>
+          <div class="p-2 bd-highlight">
+            <button
+              type="button"
+              class="btn btn-outline-success"
+              id="refresh-button"
+            >
+              Actualizar
+            </button>
+          </div>
+        </div>
+        <!--FIN Botones-->
+
+        <table class="table m-10">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">Inventario CDMX</th>
+              <th scope="col">Inventario GDL</th>
+              <th scope="col">Piezas Vendidas</th>
+              <th scope="col">Total Vendido</th>
+              <th scope="col">Piezas Vendidas (Histórico)</th>
+            </tr>
+          </thead>
+          <tbody id="table-body-inventory-data"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
+      integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+      crossorigin="anonymous"
+    ></script>
+    <script type="module" src="./assets/main.js"></script>
+  </body>
+</html>
