@@ -130,12 +130,17 @@ const openAccount = async (vendorObject) => {
   let tableHTML = "";
   tableHTML = vendorsTableArray.map((record) => {
     const inventarioGDL = record.fields["Inventario GDL"] || 0;
+    const inventarioCDMX = record.fields["Inventario Tryp Now"] || 0;
+    const totalVendido = formatter.format(
+      record.fields["Total Sales (Periodo Actual)"]
+    );
+
     return `<tr>
           <th scope="row">${record.fields["Variant Label"]}</th>
-          <td>${record.fields["Inventario Tryp Now"]}</td>
+          <td>${inventarioCDMX}</td>
           <td>${inventarioGDL}</td>
           <td>${record.fields["Piezas Vendidas Corte Actual"]}</td>
-          <td>${record.fields["Total Sales (Periodo Actual)"]}</td>
+          <td>${totalVendido}</td>
           <td>${record.fields["Total Vendidos (Historico)"]}</td>
         </tr>`;
   });
