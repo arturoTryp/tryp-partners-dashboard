@@ -206,7 +206,7 @@ label{
 }
 
 .col-highlights h2{
-    font-family: --BwGradualRegual;
+    font-family: var(--BwGradualMedium);
     font-size: 26px;
 
 }
