@@ -1,3 +1,17 @@
+@font-face {
+    font-family: 'Bw-Gradual-Regular';
+    src: url('../fonts/BwGradual-Regular.otf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+  }
+
+@font-face {
+    font-family: 'Bw-Gradual-Medium';
+    src: url('../fonts/BwGradual-Medium.otf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+  }
+
 :root{
     --verdeTryp:#32bc5d;
 	--verdeTryp20Percent:#badfcc;
@@ -14,7 +28,16 @@
 	--crema20Percent:#e7e6e1;
 	--cremaLight:#e6e4dd;
 	--softGrey: #F1F1F1;
+    --BwGradualRegual:Bw-Gradual-Regular;
+    --BwGradualMedium:Bw-Gradual-Medium;
 
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('fonts/OpenSans-Regular.ttf') format('truetype');
+  font-style: normal;
+  font-weight: normal;
 }
 
 body {
@@ -37,6 +60,11 @@ body {
     display: grid;
     grid-template-rows: auto 1fr auto;
     width: 300px;
+}
+
+.form-container p{
+    font-family: var(--BwGradualRegual);
+    text-align: center;
 }
 
 .form{
@@ -68,9 +96,10 @@ body {
 }
 
 label{
-    font-size: var(--sm);
+    font-size: 14px;
     font-weight: bold;
     margin-bottom: 8px;
+    
 }
 .input{
     background-color: var(--softGrey);
@@ -104,6 +133,7 @@ label{
     font-size: var(--md);
     font-weight: bold;
     height: 60px;
+    font-family: var(--BwGradualMedium);
 }
 
 .secondary-button{
@@ -116,6 +146,10 @@ label{
     font-size: var(--md);
     font-weight: bold;
     height: 60px;
+}
+
+.main-container{
+    margin: 0px !important;
 }
 
 .login-button{
@@ -143,7 +177,7 @@ label{
 }
 
 .header-data .col{
-    font-family: Avenir-black;
+    font-family: var(--BwGradualMedium);
     text-align: initial;
     padding: 4px;
     font-size: 20px;
@@ -151,7 +185,7 @@ label{
 }
 
 .header-data .col:nth-child(2){
-    font-family: Avenir;
+    font-family: var(--BwGradualRegual);
     text-align: end;
     font-size: 16px;
 
@@ -166,28 +200,29 @@ label{
     border-radius: 10px;
     font-family: Avenir;
     margin: 10px 20px;
-    color: var(--verdeObscuro);
+    color: white;
+    font-family: var(--BwGradualMedium);
     
 }
 
 .col-highlights h2{
-    font-family: Avenir-black;
+    font-family: --BwGradualRegual
     font-size: 26px;
-    color: var(--verdeObscuro);
+
 }
 
 .highlights-row .col-highlights:nth-child(1){
-    background-color: var(--cannabis20Percent);
+    background-color: var(--verdeTryp)
     
 }
 
 .highlights-row .col-highlights:nth-child(2){
-    background-color: var(--crema20Percent);
+    background-color: var(--cannabis)
     
 }
 
 .highlights-row .col-highlights:nth-child(3){
-    background-color: var(--naranja20Percent);
+    background-color: var(--magenta)
 
 }
 
@@ -202,16 +237,22 @@ label{
 
 th{
    font-size: 14px;
+   font-family: var(--BwGradualMedium);
 
 }
 
 td{
     font-size: 14px;
+    font-family: Avenir-black;
 }
 
 .csv-button{
     margin: 10px;
     align-items: flex-end;
+}
+
+.nav-link{
+    font-family: var(--BwGradualRegual);
 }
 
 
