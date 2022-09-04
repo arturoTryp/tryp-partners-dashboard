@@ -19,9 +19,13 @@
     <title>Tryp - Vendors Dashboard</title>
   </head>
   <body>
-    <div class="login">
+    <!--Login From Begin-->
+    <div class="login" id="login-form-container">
       <div class="form-container">
         <img src="./img/trypLogo.png" alt="logo" class="logo" />
+        <p style="text-align: center; font-family:Avenir-black">
+          Dashboard para Vendedores
+        </p>
 
         <form class="form" id="login-form">
           <label for="email">Email</label>
@@ -44,11 +48,86 @@
             type="submit"
             value="Iniciar Sesión"
             class="primary-button login-button"
+            id="submitBtn"
           />
-          <span>¿Olvide mi contraseña?</span>
         </form>
+
+        <button class="forgot-password">
+          ¿Olvide mi contraseña?
+        </button>
       </div>
     </div>
+    <!--Login From END-->
+
+    <div class="container-fluid inactive" id="main-container">
+      <!--Info header Container-->
+      <div class="row header-data">
+        <div class="col" id="vendor-name">Partner Name</div>
+        <div class="col" id="pay-date">Corte Actual</div>
+      </div>
+
+      <!--Highlights Container-->
+      <div class="row highlights-row">
+        <div class="col col-highlights">
+          <h2 id="total-sold">$500</h2>
+          <span>Total vendido este periodo</span>
+        </div>
+
+        <div class="col col-highlights">
+          <h2 id="total-earnings">$500</h2>
+          <span>Ingresos a recibir este periodo</span>
+        </div>
+
+        <div class="col col-highlights">
+          <h2 id="pieces-amount">300</h2>
+          <span>Articulos vendidos</span>
+        </div>
+      </div>
+
+      <!--End Highlights Container-->
+
+      <div class="row m-5"></div>
+
+      <!--Botones-->
+      <div class="table-container">
+        <div class="d-flex flex-row-reverse bd-highlight">
+          <div class="p-2 bd-highlight">
+            <button
+              type="button"
+              class="btn btn-outline-success"
+              id="download-csv-inventory"
+            >
+              CSV
+            </button>
+          </div>
+          <div class="p-2 bd-highlight">
+            <button
+              type="button"
+              class="btn btn-outline-success"
+              id="refresh-button"
+            >
+              Actualizar
+            </button>
+          </div>
+        </div>
+        <!--FIN Botones-->
+
+        <table class="table m-10">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">Inventario CDMX</th>
+              <th scope="col">Inventario GDL</th>
+              <th scope="col">Piezas Vendidas</th>
+              <th scope="col">Total Vendido</th>
+              <th scope="col">Piezas Vendidas (Histórico)</th>
+            </tr>
+          </thead>
+          <tbody id="table-body-inventory-data"></tbody>
+        </table>
+      </div>
+    </div>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script

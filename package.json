@@ -19,6 +19,7 @@
   "homepage": "https://github.com/arturoTryp/tryp-partners-dashboard#readme",
   "dependencies": {
     "airtable": "^0.11.4",
+    "dotenv": "^16.0.2",
     "fetch-node": "^0.0.1",
     "require": "^2.4.20"
   }
