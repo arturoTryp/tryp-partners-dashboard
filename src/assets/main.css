@@ -45,6 +45,10 @@ body {
     font-family: 'Avenir';
 }
 
+h2{
+    font-family: var(--BwGradualMedium);
+}
+
 .inactive {
     display: none !important;
 }
@@ -254,8 +258,18 @@ td{
 .nav-link{
     font-family: var(--BwGradualRegual);
 }
+.d-flex {
+    justify-content: space-between;
+}
+@media (max-width: 600px){
+    .scroll-horizontal {
+        margin: 4px, 4px;
+        padding: 4px;
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+    }
 
-
-@media (max-width: 700px){
 
 }
