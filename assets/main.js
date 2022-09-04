@@ -6,7 +6,15 @@ const submitButton = document.getElementById("submitBtn");
 const maintContainer = document.getElementById("main-container");
 const downloadCSVBtn = document.getElementById("download-csv-inventory");
 const refreshBtn = document.getElementById("refresh-button");
-const token = "Bearer keyGwhp6yd4P08eqe";
+
+import {} from "dotenv/config";
+const token = process.env.AIRTABLE_API_TOKEN;
+console.log(token);
+
+function createWindow() {
+  const win = new BrowserWindow({});
+}
+console.log(token);
 
 //Validacion del Login
 form.addEventListener("submit", async (e) => {
