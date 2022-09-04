@@ -206,7 +206,7 @@ label{
 }
 
 .col-highlights h2{
-    font-family: --BwGradualRegual
+    font-family: --BwGradualRegual;
     font-size: 26px;
 
 }
@@ -254,8 +254,6 @@ td{
 .nav-link{
     font-family: var(--BwGradualRegual);
 }
-
-
 
 
 @media (max-width: 700px){
