@@ -7,6 +7,7 @@ const maintContainer = document.getElementById("main-container");
 const downloadCSVBtn = document.getElementById("download-csv-inventory");
 const refreshBtn = document.getElementById("refresh-button");
 const token = "Bearer keyGwhp6yd4P08eqe";
+//const token = process.env.AIRTABLE_API_TOKEN;
 
 //Validacion del Login
 form.addEventListener("submit", async (e) => {
