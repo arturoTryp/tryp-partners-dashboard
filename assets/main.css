@@ -121,6 +121,7 @@ label{
 
 .input:focus{
    outline: 1.5px solid var(--cannabis) ;
+   border-radius: 8px;
    
 }
 .input-email{
@@ -271,5 +272,31 @@ td{
         white-space: nowrap;
     }
 
+    #pay-date{
+        font-size: 12px;
+    }
+
 
 }
+
+.btn{
+    font-family: var(--BwGradualMedium);
+    color: var(--verdeTryp);
+    border-color: #32bc5d;
+    margin: 8px 8px;
+   
+}
+
+.btn-outline-primary:not(:disabled):not(.disabled).active{
+    background-color: var(--verdeTryp);
+    border-color: var(--verdeTryp);
+}
+
+.btn:hover{
+    font-family: var(--BwGradualMedium);
+    color: white;
+    border-color: var(--verdeTryp) !important;
+    background-color: var(--verdeTryp) !important;
+    
+}
+
