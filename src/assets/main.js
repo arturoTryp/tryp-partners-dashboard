@@ -7,7 +7,19 @@ const maintContainer = document.getElementById("main-container");
 const downloadCSVBtn = document.getElementById("download-csv-inventory");
 const refreshBtn = document.getElementById("refresh-button");
 const token = "Bearer keyGwhp6yd4P08eqe";
-//const token = process.env.AIRTABLE_API_TOKEN;
+const buttonInventario = document.getElementById("btn-inventory");
+const buttonHistoricoVentas = document.getElementById("btn-historico");
+const inventoryTableContainer = document.getElementById(
+  "inventory-table-container"
+);
+const historicoTableContainer = document.getElementById(
+  "historico-table-container"
+);
+
+// import dotenv from "dotenv";
+// dotenv.config({ silent: true });
+// const token2 = process.env.AIRTABLE_API_TOKEN;
+// console.log(token2);
 
 //Validacion del Login
 form.addEventListener("submit", async (e) => {
@@ -39,66 +51,9 @@ form.addEventListener("submit", async (e) => {
   }
 });
 
-//Funcion para llamar a cualquier API
-async function callAPI(urlAPI, params = null) {
-  const response = params ? await fetch(urlAPI, params) : await fetch(urlAPI);
-  const data = await response.json();
-  return data;
-}
-
-//Llamada del API del Login para validar credenciales
-const getVendorsLogin = async (email, password) => {
-  const formula = encodeURIComponent(
-    `AND({Email} = '${email}',{Password} = '${password}')`
-  );
-
-  const url = `https://api.airtable.com/v0/appsrYW53pV5fd9IT/tble27OyKDjvWH1zH?fields=Email&fields=Net+Vendor+Earnings+Actual+Period&fields=Total+Sold+this+period&fields=Products+Sold+on+Actual+Period&fields=Password&fields=Vendor+Name&filterByFormula=${formula}`;
-  const params = {
-    method: "GET",
-    headers: { Authorization: token },
-  };
-
-  try {
-    const loginResponse = await callAPI(url, params);
-    return loginResponse.records[0].fields;
-  } catch (error) {
-    console.log("Error en login Validation: ", error);
-    return null;
-  }
-};
-
-const getVendorsInventoryTable = async (vendorNameID) => {
-  const formula = encodeURIComponent(
-    `AND(FIND('${vendorNameID}',ARRAYJOIN({Vendor (from Product)}, ",")),IF(FIND('[OFF]',{Variant Label})>0,0,1))`
-  );
-
-  const sortURL =
-    "&sort%5B0%5D%5Bfield%5D=Piezas+Vendidas+Corte+Actual&sort%5B0%5D%5Bdirection%5D=desc";
-
-  let API = `https://api.airtable.com/v0/appsrYW53pV5fd9IT/tblb2dLlLUseh7sUj?fields%5B%5D=Variant+Label&fields%5B%5D=Inventario+Tryp+Now&fields%5B%5D=Inventario+GDL&fields%5B%5D=Total+Sales+(Periodo+Actual)&fields%5B%5D=SKU&fields%5B%5D=Price&fields%5B%5D=Total+Vendidos+(Historico)&fields%5B%5D=Vendor+(from+Product)&fields%5B%5D=Piezas+Vendidas+Corte+Actual`;
-  const formulaURL = `&filterByFormula=${formula}`;
-  let urlAPI = API + sortURL + formulaURL;
-
-  const params = { method: "GET", headers: { Authorization: token } };
-
-  const apiResponse = await callAPI(urlAPI, params);
-
-  let tableArray = await apiResponse.records;
-  let offset = apiResponse.offset || null;
-
-  while (offset) {
-    const offsetURL = `&offset=${offset}`;
-    urlAPI = API + offsetURL + formulaURL;
-    const apiResponse = await callAPI(urlAPI, params);
-    offset = apiResponse?.offset || null;
-    await tableArray.push(...apiResponse.records);
-  }
-
-  return await tableArray;
-};
-
 //Funcion para mostrar datos cuando se valida el login
 const openAccount = async (vendorObject) => {
+  console.log("Vendor Object", vendorObject);
   loginFormContainer.classList.add("inactive");
   maintContainer.classList.toggle("inactive");
 
@@ -151,6 +106,64 @@ const openAccount = async (vendorObject) => {
   ).innerHTML = tableHTML.toString().replaceAll(",", "");
 
   console.log(vendorsTableArray);
+};
+
+//Funcion para llamar a cualquier API
+async function callAPI(urlAPI, params = null) {
+  const response = params ? await fetch(urlAPI, params) : await fetch(urlAPI);
+  const data = await response.json();
+  return data;
+}
+
+//Llamada del API del Login para validar credenciales
+const getVendorsLogin = async (email, password) => {
+  const formula = encodeURIComponent(
+    `AND({Email} = '${email.toLowerCase().trim()}',{Password} = '${password}')`
+  );
+
+  const url = `https://api.airtable.com/v0/appsrYW53pV5fd9IT/tble27OyKDjvWH1zH?fields=Email&fields=Net+Vendor+Earnings+Actual+Period&fields=Total+Sold+this+period&fields=Products+Sold+on+Actual+Period&fields=Password&fields=Vendor+Name&filterByFormula=${formula}`;
+  const params = {
+    method: "GET",
+    headers: { Authorization: token },
+  };
+
+  try {
+    const loginResponse = await callAPI(url, params);
+    return loginResponse.records[0].fields;
+  } catch (error) {
+    console.log("Error en login Validation: ", error);
+    return null;
+  }
+};
+
+const getVendorsInventoryTable = async (vendorNameID) => {
+  const formula = encodeURIComponent(
+    `AND(FIND('${vendorNameID}',ARRAYJOIN({Vendor (from Product)}, ",")),IF(FIND('[OFF]',{Variant Label})>0,0,1))`
+  );
+
+  const sortURL =
+    "&sort%5B0%5D%5Bfield%5D=Piezas+Vendidas+Corte+Actual&sort%5B0%5D%5Bdirection%5D=desc";
+
+  let API = `https://api.airtable.com/v0/appsrYW53pV5fd9IT/tblb2dLlLUseh7sUj?fields%5B%5D=Variant+Label&fields%5B%5D=Inventario+Tryp+Now&fields%5B%5D=Inventario+GDL&fields%5B%5D=Total+Sales+(Periodo+Actual)&fields%5B%5D=SKU&fields%5B%5D=Price&fields%5B%5D=Total+Vendidos+(Historico)&fields%5B%5D=Vendor+(from+Product)&fields%5B%5D=Piezas+Vendidas+Corte+Actual`;
+  const formulaURL = `&filterByFormula=${formula}`;
+  let urlAPI = API + sortURL + formulaURL;
+
+  const params = { method: "GET", headers: { Authorization: token } };
+
+  const apiResponse = await callAPI(urlAPI, params);
+
+  let tableArray = await apiResponse.records;
+  let offset = apiResponse.offset || null;
+
+  while (offset) {
+    const offsetURL = `&offset=${offset}`;
+    urlAPI = API + offsetURL + formulaURL;
+    const apiResponse = await callAPI(urlAPI, params);
+    offset = apiResponse?.offset || null;
+    await tableArray.push(...apiResponse.records);
+  }
+
+  return await tableArray;
 };
 
 //Funcion para obtener STR de periodo de corte actual
@@ -248,4 +261,30 @@ refreshBtn.addEventListener("click", async () => {
   const vendorObject = await getVendorsLogin(email.value, password.value);
   openAccount(vendorObject);
   maintContainer.classList.toggle("inactive");
+});
+
+buttonInventario.addEventListener("click", (e) => {
+  buttonInventario.classList.toggle("active");
+  buttonHistoricoVentas.classList.toggle("active");
+
+  if (buttonInventario.classList.contains("active")) {
+    inventoryTableContainer.classList.remove("inactive");
+    historicoTableContainer.classList.add("inactive");
+  } else {
+    inventoryTableContainer.classList.add("inactive");
+    historicoTableContainer.classList.remove("inactive");
+  }
+});
+
+buttonHistoricoVentas.addEventListener("click", (e) => {
+  buttonInventario.classList.toggle("active");
+  buttonHistoricoVentas.classList.toggle("active");
+
+  if (buttonHistoricoVentas.classList.contains("active")) {
+    inventoryTableContainer.classList.add("inactive");
+    historicoTableContainer.classList.remove("inactive");
+  } else {
+    inventoryTableContainer.classList.remove("inactive");
+    historicoTableContainer.classList.add("inactive");
+  }
 });
