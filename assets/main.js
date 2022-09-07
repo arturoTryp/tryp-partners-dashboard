@@ -3,6 +3,7 @@ import {
   tableToCSV,
   downloadCSVFile,
   callAPI,
+  dateFormat,
 } from "./functions.js";
 
 const loginFormContainer = document.getElementById("login-form-container");
@@ -11,7 +12,8 @@ const email = document.getElementById("email");
 const password = document.getElementById("password");
 const submitButton = document.getElementById("submitBtn");
 const maintContainer = document.getElementById("main-container");
-const downloadCSVBtn = document.getElementById("download-csv-inventory");
+const CVSBtnInventory = document.getElementById("download-csv-inventory");
+const CVSBtnHistorico = document.getElementById("download-csv-historico");
 const refreshBtn = document.getElementById("refresh-button");
 const token = "Bearer keyGwhp6yd4P08eqe";
 const buttonInventario = document.getElementById("btn-inventory");
@@ -60,14 +62,12 @@ form.addEventListener("submit", async (e) => {
 
 //Funcion para mostrar datos cuando se valida el login
 const openAccount = async (vendorObject) => {
-  console.log("Vendor Object", vendorObject);
   loginFormContainer.classList.add("inactive");
   maintContainer.classList.toggle("inactive");
 
   var formatter = new Intl.NumberFormat("es-MX", {
     style: "currency",
     currency: "MXN",
-    maximumFractionDigits: 1,
   });
 
   document.getElementById("vendor-name").innerText =
@@ -85,13 +85,13 @@ const openAccount = async (vendorObject) => {
     "pieces-amount"
   ).innerText = `${vendorObject["Products Sold on Actual Period"]}`;
 
-  let vendorsTableArray = [];
-  vendorsTableArray = await getVendorsInventoryTable(
+  let vendorsInventoryTableArray = [];
+  vendorsInventoryTableArray = await getVendorsInventoryTable(
     vendorObject["Vendor Name"]
   );
 
   let tableHTML = "";
-  tableHTML = vendorsTableArray.map((record) => {
+  tableHTML = vendorsInventoryTableArray.map((record) => {
     const inventarioGDL = record.fields["Inventario GDL"] || 0;
     const inventarioCDMX = record.fields["Inventario Tryp Now"] || 0;
     const totalVendido = formatter.format(
@@ -99,20 +99,58 @@ const openAccount = async (vendorObject) => {
     );
 
     return `<tr>
-          <th scope="row">${record.fields["Variant Label"]}</th>
-          <td>${inventarioCDMX}</td>
-          <td>${inventarioGDL}</td>
-          <td>${record.fields["Piezas Vendidas Corte Actual"]}</td>
-          <td>${totalVendido}</td>
-          <td>${record.fields["Total Vendidos (Historico)"]}</td>
-        </tr>`;
+      <th scope="row">${record.fields["Variant Label"]}</th>
+      <td>${inventarioCDMX}</td>
+      <td>${inventarioGDL}</td>
+      <td>${record.fields["Piezas Vendidas Corte Actual"]}</td>
+      <td>${totalVendido}</td>
+      <td>${record.fields["Total Vendidos (Historico)"]}</td>
+      </tr>`;
   });
 
   document.getElementById(
     "table-body-inventory-data"
   ).innerHTML = tableHTML.toString().replaceAll(",", "");
 
-  console.log(vendorsTableArray);
+  let vendorsHistoricoSalesTable = await getHistoricSalesTable(
+    vendorObject["Vendor Name"]
+  );
+
+  drawTableHistorico(await vendorsHistoricoSalesTable);
+};
+
+const drawTableHistorico = async (salesArray) => {
+  var formatter = new Intl.NumberFormat("es-MX", {
+    style: "currency",
+    currency: "MXN",
+  });
+
+  let tableHTML = salesArray.map((record) => {
+    const precio = formatter.format(record.fields["Price"]);
+    const cantidadXPrecio = formatter.format(record.fields["Quantity*Price"]);
+    const comisionBase = record.fields["Comision (script)"] * 100;
+    const comisionPlanMKT = record.fields["MKT Plan Comision"] * 100;
+    const createdAt = dateFormat(record.fields["Created At"], "dd-MM-yy");
+    const vendorNetErnings = formatter.format(
+      record.fields["Vendor Net Earnings"]
+    );
+
+    return `<tr>
+          <th scope="row">${record.fields["Name"]}</th>
+          <td>${createdAt}</td>
+          <td>${record.fields["Quantity"]}</td>
+          <td>${precio}</td>
+          <td>${cantidadXPrecio}</td>
+          <td>${record.fields["SKU"]}</td>
+          <td>${vendorNetErnings}</td>
+          <td>${comisionBase}%</td>
+          <td>${comisionPlanMKT}%</td>
+        </tr>`;
+  });
+
+  document.getElementById(
+    "table-body-historico-data"
+  ).innerHTML = tableHTML.toString().replaceAll(",", "");
 };
 
 //Llamada del API del Login para validar credenciales
@@ -166,9 +204,13 @@ const getVendorsInventoryTable = async (vendorNameID) => {
   return await tableArray;
 };
 
-downloadCSVBtn.addEventListener("click", (e) => {
-  const csvData = tableToCSV();
-  console.log(csvData);
+CVSBtnInventory.addEventListener("click", (e) => {
+  const csvData = tableToCSV("inventory-table");
+  downloadCSVFile(csvData);
+});
+
+CVSBtnHistorico.addEventListener("click", (e) => {
+  const csvData = tableToCSV("historico-table");
   downloadCSVFile(csvData);
 });
 
@@ -203,3 +245,33 @@ buttonHistoricoVentas.addEventListener("click", (e) => {
     historicoTableContainer.classList.add("inactive");
   }
 });
+
+const getHistoricSalesTable = async (vendorNameID) => {
+  const formula = encodeURIComponent(
+    `AND(FIND('${vendorNameID}',ARRAYJOIN({Vendor}, ",")))`
+  );
+
+  const sortURL =
+    "&sort%5B0%5D%5Bfield%5D=Created+At&sort%5B0%5D%5Bdirection%5D=desc";
+
+  let API = `https://api.airtable.com/v0/appsrYW53pV5fd9IT/tbl4dkYqn9YG4MHar?fields%5B%5D=Created+At&fields%5B%5D=Quantity&fields%5B%5D=Order&fields%5B%5D=Price&fields%5B%5D=Quantity*Price&fields%5B%5D=SKU&fields%5B%5D=Vendor+Net+Earnings&fields%5B%5D=Comision+(script)&fields%5B%5D=MKT+Plan+Comision&fields%5B%5D=Name`;
+  const formulaURL = `&filterByFormula=${formula}`;
+  let urlAPI = API + sortURL + formulaURL;
+
+  const params = { method: "GET", headers: { Authorization: token } };
+
+  const apiResponse = await callAPI(urlAPI, params);
+
+  let tableArray = await apiResponse.records;
+  let offset = apiResponse.offset || null;
+
+  while (offset) {
+    const offsetURL = `&offset=${offset}`;
+    urlAPI = API + offsetURL + formulaURL;
+    const apiResponse = await callAPI(urlAPI, params);
+    offset = apiResponse?.offset || null;
+    await tableArray.push(...apiResponse.records);
+  }
+
+  return await tableArray;
+};

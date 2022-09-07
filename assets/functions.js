@@ -29,16 +29,16 @@ export function getCurrentPayDate() {
   return actualPaymentPeriod;
 }
 
-export function tableToCSV() {
+export function tableToCSV(tableID) {
   // Variable to store the final csv data
 
   var csv_data = [];
 
   // Get each row data
-  var rows = document.getElementsByTagName("tr");
+  var rows = document.querySelectorAll(`#${tableID} tr`);
   for (var i = 0; i < rows.length; i++) {
     // Get each column data
-    var cols = rows[i].querySelectorAll("td,th");
+    var cols = rows[i].querySelectorAll(`#${tableID} td, #${tableID} th`);
 
     // Stores each csv row data
     var csvrow = [];
@@ -64,6 +64,7 @@ export function downloadCSVFile(csv_data) {
   // Create CSV file object and feed our
   // csv_data into it
   const blob = new Blob([csv_data], { type: "text/csv" });
+  console.log(blob);
 
   // Creating an object for downloading url
   const url = window.URL.createObjectURL(blob);
@@ -87,4 +88,29 @@ export async function callAPI(urlAPI, params = null) {
   const response = params ? await fetch(urlAPI, params) : await fetch(urlAPI);
   const data = await response.json();
   return data;
+}
+
+export function dateFormat(inputDate, format) {
+  //parse the input date
+  const date = new Date(inputDate);
+
+  //extract the parts of the date
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+
+  //replace the month
+  format = format.replace("MM", month.toString().padStart(2, "0"));
+
+  //replace the year
+  if (format.indexOf("yyyy") > -1) {
+    format = format.replace("yyyy", year.toString());
+  } else if (format.indexOf("yy") > -1) {
+    format = format.replace("yy", year.toString().substr(2, 2));
+  }
+
+  //replace the day
+  format = format.replace("dd", day.toString().padStart(2, "0"));
+
+  return format;
 }
