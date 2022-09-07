@@ -28,8 +28,8 @@
 	--crema20Percent:#e7e6e1;
 	--cremaLight:#e6e4dd;
 	--softGrey: #F1F1F1;
-    --BwGradualRegual:Bw-Gradual-Regular;
-    --BwGradualMedium:Bw-Gradual-Medium;
+    --BwGradualRegual:Bw-Gradual-Regular, Avenir;
+    --BwGradualMedium:Bw-Gradual-Medium, Avenir;
 
 }
 
