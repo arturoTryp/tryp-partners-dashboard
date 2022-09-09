@@ -6,7 +6,7 @@ import {
   dateFormat,
 } from "./functions.js";
 
-// import { getAirtableToken } from "../../env.js";
+import tkn from "../../aK.js";
 
 const loginFormContainer = document.getElementById("login-form-container");
 const form = document.getElementById("login-form");
@@ -17,9 +17,7 @@ const maintContainer = document.getElementById("main-container");
 const CVSBtnInventory = document.getElementById("download-csv-inventory");
 const CVSBtnHistorico = document.getElementById("download-csv-historico");
 const refreshBtn = document.getElementById("refresh-button");
-const token = "Bearer keyGwhp6yd4P08eqe";
-
-console.log(process.env.NOMBRE_VARIABLE);
+const token = tkn;
 
 const buttonInventario = document.getElementById("btn-inventory");
 const buttonHistoricoVentas = document.getElementById("btn-historico");
