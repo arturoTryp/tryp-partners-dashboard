@@ -20,12 +20,13 @@
   "homepage": "https://github.com/arturoTryp/tryp-partners-dashboard#readme",
   "dependencies": {
     "airtable": "^0.11.4",
-    "dotenv": "^16.0.2",
+    "dotenv": "^8.0.0",
     "express": "^4.18.1",
     "fetch-node": "^0.0.1",
     "require": "^2.4.20"
   },
   "devDependencies": {
+    "@types/dotenv": "^8.2.0",
     "gh-pages": "^4.0.0"
   }
 }
