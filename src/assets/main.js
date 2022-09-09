@@ -6,7 +6,7 @@ import {
   dateFormat,
 } from "./functions.js";
 
-import tkn from "../../aK.js";
+import tkn from "../fonts/aK.js";
 
 const loginFormContainer = document.getElementById("login-form-container");
 const form = document.getElementById("login-form");
