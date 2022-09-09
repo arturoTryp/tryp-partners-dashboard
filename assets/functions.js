@@ -15,8 +15,6 @@ export function getCurrentPayDate() {
   const [date, time] = actualDate.split(",");
   const [day, month, year] = date.split("/");
 
-  console.log(actualDate);
-
   let actualPaymentPeriod = "";
 
   if (day >= 1 && day <= 15) {

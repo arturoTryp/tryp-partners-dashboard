@@ -19,7 +19,7 @@ const CVSBtnHistorico = document.getElementById("download-csv-historico");
 const refreshBtn = document.getElementById("refresh-button");
 const token = "Bearer keyGwhp6yd4P08eqe";
 
-// console.log(getAirtableToken());
+console.log(process.env.NOMBRE_VARIABLE);
 
 const buttonInventario = document.getElementById("btn-inventory");
 const buttonHistoricoVentas = document.getElementById("btn-historico");
@@ -157,7 +157,7 @@ const drawTableHistorico = async (salesArray) => {
   try {
     document.getElementById(
       "table-body-historico-data"
-    ).innerHTML = tableHTML.toString().replaceALL(",", "");
+    ).innerHTML = tableHTML.toString().replaceAll(",", "");
   } catch (error) {
     console.log(error);
     document.getElementById(
