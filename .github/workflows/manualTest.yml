@@ -1,0 +1,153 @@
+Cover image for Cómo usar los secrets de Github
+Roberto Morais
+Roberto Morais
+Posted on 8 nov 2020
+
+Cómo usar los secrets de Github
+#
+github
+#
+ci
+#
+deploy
+#
+deployments
+Lo más probable es que como desarrollador hayas usado o uses en tu día a día la plataforma de Github para proteger y versionar tu código.
+
+Desde hace mucho tiempo la plataforma de esta empresa, que inicialmente solo se usaba para almacenar el código de tu aplicación, también puede funcionar como un servidor de tu web y por ello tiene los llamados Secrets y Actions, dos tecnologías que debes dominar si quieres publicar, de forma segura, tu plataforma en el servidor de Github.
+
+Empecemos por el principio.
+
+¿Qué son los Secrets?
+Github llama Secrets a los datos que no se deben compartir en el propio código por seguridad. Por ejemplo, la semilla o seem que estamos usando para encriptar y generar un JSON Web token válido para nuestros servidor de API REST.
+
+¿Qué son los Actions?
+Son flujos de trabajo que desatamos cuando hacemos una determinada acción sobre nuestro repositorio. Por ejemplo, un sistema de integración continua en el que le decimos que cada vez que se haga push sobre la rama Master se ejecute una acción.
+
+Una vez que conocemos la teoría, vamos a la práctica.
+
+Usar Secrets y Actions
+Crear un Secret en Github
+En este ejemplo vamos a crear un Secret para guardar la KEY de la API de Google maps, de este modo si alguien decide coger nuestro código, no tendrá nuestra clave de API de Google maps. (Todos sabemos que la podría sacar inspeccionando elemento en su google chrome y revisando el header de la web, pero no queremos ponérselo tan fácil.)
+
+Vamos a las Settings de nuestro repositorio de Github, en el que queremos usar los Secrets, y en el menú de la izquierda nos aparece la opción de los secrets y al no tener ninguno lo veremos así:
+
+Imagen de Secrets 1
+
+Pulsando en New Secret cargas el formulario para añadir un nuevo Secret a ese repositorio, en el que deberas indicar un nombre y un valor al secreto:
+
+Imagen de Secrets 2
+
+Una vez ambos datos sean correctos, guarda el secreto y ya habrás generado con éxito el primer Secret de tu repositorio, pero ahora debemos usarlo en nuestro código y para ello tenemos que crear un Action para nuestro repositorio.
+
+Crear un Action CI
+Para ello vamos a pinchar en Actions, dentro del menú de nuestro repositorio:
+
+Imagen de Secrets 3
+
+Al pulsar en Actions lo primero que veremos será los workflows sugeridos por Github dependiendo el lenguaje que usemos en ese repositorio:
+
+Imagen de Secrets 4
+
+Aunque si bajamos hasta abajo del todo veremos una opción para añadir un workflow en blanco, lo que nos genera una estructura básica:
+
+Imagen de Secrets 5
+
+En este caso seleccionamos la opción de "Manual workflow" porque más abajo tenemos un ejemplo de configuración de CI (Integración Continua) para asignar el Secret a una variable de entorno, lo que nos permitirá usar esa variable en nuestro código. Basta con que sustituyas el código de ejemplo por este:
+name: Build and Deploy to GitHub Pages on Push
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Build and Deploy
+        uses: JamesIves/github-pages-deploy-action@master
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          API_GOOGLE_MAP: ${{ secrets.API_GOOGLE_MAP }}
+          BRANCH: gh-pages
+          FOLDER: public
+          BUILD_SCRIPT: yarn && yarn run build
+En esta configuración hacemos que cuando se haga un push a la rama master de nuestro repositorio se ejecute la acción o Job: build-and-deploy que monta nuestra web sobre la última versión de un ubuntu y ejecuta dos acciones:
+
+Checkout: Lanza el comando de git checkout a la rama master dentro del ubuntu.
+Build and Deploy: Primero compila el código de nuestra web, lanzado el comando yarn run build. Después hace la acción de asignar las variables de entorno con los secrets que hemos creado : secrets.API_GOOGLE_MAP a la variable de entorno API_GOOGLE_MAP. Para ello usamos lo que ha desarrollado James Ives en su repositorio: github-pages-deploy-action@master pasándole las variables que necesita en el env. El resultado de este Job se guarda en la rama indicada en la variable: BRANCH y en este caso es el contenido de la carpeta (FOLDER) public de nuestro código.
+En este ejemplo, uso este action para una web hecha con Gatsby, por eso uso la carpeta public ya que es donde genera el código estático de la web al lanzar el comando build.
+
+Usar los Secrets como variables de entorno
+Por ultimo, para usar las variables de entorno en nuestro código, solo tenemos que poner lo siguiente:
+process.env.NOMBRE_VARIABLE; // in JavaScript
+getenv('MODE'); // in PHP
+Discussion (0)
+Subscribe
+pic
+Add to the discussion
+Code of Conduct • Report abuse
+DEV runs on 100% open source code known as Forem.
+ 
+Contribute to the codebase or host your own.
+ 
+Check these out! 👇
+
+Main Forem Repo
+Self-Host Instructions
+Read next
+pwd9000 profile image
+Run Docker based GitHub runner containers on GitHub Codespaces
+Marcel.L - Aug 14
+
+josh_smith profile image
+Learn GitHub's site wide keyboard shortcuts
+Josh Smith - Jul 15
+
+2kabhishek profile image
+I Made a Web App to Showcase all your GitHub Projects 😍✨
+Abhishek Keshri - Jul 30
+
+sanixdarker profile image
+How to clone a sub directory of a git project (not a zip)
+darker - Aug 12
+
+
+Roberto Morais
+Follow
+I am a web application software programmer, I love learning new things and sharing experiences and knowledge with others.
+LOCATION
+Spain
+WORK
+Senior Developer
+JOINED
+8 abr 2020
+More from Roberto Morais
+Qué es deployer y cómo usarlo
+#php #deploy #webdev
+name: Build and Deploy to GitHub Pages on Push
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Build and Deploy
+        uses: JamesIves/github-pages-deploy-action@master
+        env:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          API_GOOGLE_MAP: ${{ secrets.API_GOOGLE_MAP }}
+          BRANCH: gh-pages
+          FOLDER: src
+          BUILD_SCRIPT: yarn && yarn run build
