@@ -14,7 +14,8 @@ export function getCurrentPayDate() {
 
   const [date, time] = actualDate.split(",");
   const [day, month, year] = date.split("/");
-  const [hour, min] = time.split(":");
+
+  console.log(actualDate);
 
   let actualPaymentPeriod = "";
 

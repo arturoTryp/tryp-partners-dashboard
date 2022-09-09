@@ -6,6 +6,8 @@ import {
   dateFormat,
 } from "./functions.js";
 
+import { getAirtableToken } from "../../env.js";
+
 const loginFormContainer = document.getElementById("login-form-container");
 const form = document.getElementById("login-form");
 const email = document.getElementById("email");
@@ -16,6 +18,9 @@ const CVSBtnInventory = document.getElementById("download-csv-inventory");
 const CVSBtnHistorico = document.getElementById("download-csv-historico");
 const refreshBtn = document.getElementById("refresh-button");
 const token = "Bearer keyGwhp6yd4P08eqe";
+
+console.log(getAirtableToken());
+
 const buttonInventario = document.getElementById("btn-inventory");
 const buttonHistoricoVentas = document.getElementById("btn-historico");
 const inventoryTableContainer = document.getElementById(
@@ -24,11 +29,6 @@ const inventoryTableContainer = document.getElementById(
 const historicoTableContainer = document.getElementById(
   "historico-table-container"
 );
-
-// import dotenv from "dotenv";
-// dotenv.config({ silent: true });
-// const token2 = process.env.AIRTABLE_API_TOKEN;
-// console.log(token2);
 
 //Validacion del Login
 form.addEventListener("submit", async (e) => {
