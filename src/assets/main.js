@@ -19,7 +19,7 @@ const CVSBtnHistorico = document.getElementById("download-csv-historico");
 const refreshBtn = document.getElementById("refresh-button");
 const token = "Bearer keyGwhp6yd4P08eqe";
 
-console.log(getAirtableToken());
+// console.log(getAirtableToken());
 
 const buttonInventario = document.getElementById("btn-inventory");
 const buttonHistoricoVentas = document.getElementById("btn-historico");
