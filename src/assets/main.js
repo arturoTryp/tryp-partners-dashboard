@@ -108,9 +108,16 @@ const openAccount = async (vendorObject) => {
       </tr>`;
   });
 
-  document.getElementById(
-    "table-body-inventory-data"
-  ).innerHTML = tableHTML.toString().replaceAll(",", "");
+  try {
+    document.getElementById(
+      "table-body-inventory-data"
+    ).innerHTML = tableHTML.toString().replaceAll(",", "");
+  } catch (error) {
+    console.log(error);
+    document.getElementById(
+      "table-body-inventory-data"
+    ).innerHTML = tableHTML.toString();
+  }
 
   let vendorsHistoricoSalesTable = await getHistoricSalesTable(
     vendorObject["Vendor Name"]
@@ -147,10 +154,16 @@ const drawTableHistorico = async (salesArray) => {
           <td>${comisionPlanMKT}%</td>
         </tr>`;
   });
-
-  document.getElementById(
-    "table-body-historico-data"
-  ).innerHTML = tableHTML.toString().replaceAll(",", "");
+  try {
+    document.getElementById(
+      "table-body-historico-data"
+    ).innerHTML = tableHTML.toString().replaceALL(",", "");
+  } catch (error) {
+    console.log(error);
+    document.getElementById(
+      "table-body-historico-data"
+    ).innerHTML = tableHTML.toString();
+  }
 };
 
 //Llamada del API del Login para validar credenciales
