@@ -6,7 +6,7 @@ import {
   dateFormat,
 } from "./functions.js";
 
-import { getAirtableToken } from "../../env.js";
+// import { getAirtableToken } from "../../env.js";
 
 const loginFormContainer = document.getElementById("login-form-container");
 const form = document.getElementById("login-form");
