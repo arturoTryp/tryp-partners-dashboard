@@ -280,9 +280,9 @@ td{
 }
 
 .btn{
-    font-family: var(--BwGradualMedium);
+    font-family: var(--BwGradualMedium) !important;
     color: var(--verdeTryp);
-    border-color: #32bc5d;
+    border-color: #32bc5d !important;
     margin: 8px 8px;
    
 }
@@ -294,7 +294,7 @@ td{
 
 .btn:hover{
     font-family: var(--BwGradualMedium);
-    color: white;
+    color: white !important;
     border-color: var(--verdeTryp) !important;
     background-color: var(--verdeTryp) !important;
     

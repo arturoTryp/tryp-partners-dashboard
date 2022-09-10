@@ -17,6 +17,7 @@ const maintContainer = document.getElementById("main-container");
 const CVSBtnInventory = document.getElementById("download-csv-inventory");
 const CVSBtnHistorico = document.getElementById("download-csv-historico");
 const refreshBtn = document.getElementById("refresh-button");
+const changePriceLink = document.getElementById("changePriceLink");
 const token = tkn;
 
 const buttonInventario = document.getElementById("btn-inventory");
@@ -74,6 +75,11 @@ const openAccount = async (vendorObject) => {
   document.getElementById("total-sold").innerText = `${formatter.format(
     vendorObject["Total Sold this period"]
   )}`;
+
+  changePriceLink.setAttribute(
+    "href",
+    `priceChange.html?vendorEmail=${email.value}&password=${vendorObject["Password"]}`
+  );
 
   document.getElementById("total-earnings").innerText = `${formatter.format(
     vendorObject["Net Vendor Earnings Actual Period"]

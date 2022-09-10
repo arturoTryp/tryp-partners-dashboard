@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cambio de precios</title>
+    <link rel="stylesheet" href="./assets/main.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container-fluid">
+      <h2 class="m-2"></h2>
+      <div class="d-flex justify-content-end">
+        <button type="button" class="btn m-2 btn-outline-primary" style="color: var(--verdeTryp);">Mandar a revision</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid scroll-horizontal">
+      <table class="table table-striped ">
+        <thead>
+          <tr>
+            <th scope="col">SKU</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Precio Actual</th>
+            <th scope="col">Precio Comparación</th>
+            <th scope="col">Nuevo Precio (Solo numeros enteros)</th>
+            <th scope="col">Nuevo Precio Comparación (Solo numeros enteros)</th>
+          </tr>
+        </thead>
+        <tbody id="table-body-price"></tbody>
+      </table>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+      crossorigin="anonymous"
+    ></script>
+    <script type="module" src="./assets/changePrice.js"></script>
+  </body>
+</html>
