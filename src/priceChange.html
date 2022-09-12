@@ -16,14 +16,14 @@
     <div class="container-fluid">
       <h2 class="m-2"></h2>
       <div class="d-flex justify-content-end">
-        <button type="button" class="btn m-2 btn-outline-primary" style="color: var(--verdeTryp);">Mandar a revision</button>
+        <button id="send" type="button" class="btn mb-4 btn-outline-primary" style="color: var(--verdeTryp);">Mandar a revision</button>
         </div>
       </div>
     </div>
 
     <div class="container-fluid scroll-horizontal">
-      <table class="table table-striped ">
-        <thead>
+      <table class="table ">
+        <thead class="thead-light">
           <tr>
             <th scope="col">SKU</th>
             <th scope="col">Nombre</th>
@@ -33,7 +33,7 @@
             <th scope="col">Nuevo Precio Comparación (Solo numeros enteros)</th>
           </tr>
         </thead>
-        <tbody id="table-body-price"></tbody>
+        <tbody id="table-body-price"><tr><td>Cargando...</td></tr></tbody>
       </table>
     </div>
 

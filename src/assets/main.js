@@ -289,6 +289,30 @@ const getHistoricSalesTable = async (vendorNameID) => {
     offset = apiResponse?.offset || null;
     await tableArray.push(...apiResponse.records);
   }
+  graph(tableArray);
 
   return await tableArray;
 };
+
+async function graph(AraytableArray) {
+  const dataArray = [];
+
+  const nuevoArray = AraytableArray.map((m) => {
+    const date = dateFormat(m.fields["Created At"][0], "dd-MM-yyyy");
+
+    const obj = {
+      date: date,
+      amount: m.fields["Quantity*Price"],
+    };
+    dataArray.push(obj);
+  });
+
+  console.log(dataArray);
+
+  dataArray.reduce((acc, data) => {
+    // create a composed key: 'year-week'
+
+    const yearWeek = `${moment(date).year()}-${moment(date).week()}`;
+    console.log(yearWeek);
+  });
+}
