@@ -64,8 +64,7 @@
     </div>
     <!--Login From END-->
 
-    <div class="container-fluid inactive" id="main-container">
-      <!--Navbar-->
+    <div class=" inactive" id="main-container">
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">
           <img src="./img/favicon-tryp.png" width="50" height="50" alt="" />
@@ -106,136 +105,141 @@
           </ul>
         </div>
       </nav>
-      <!--FIN Navbar-->
 
-      <!--Info header Container-->
-      <div class="row header-data">
-        <div class="col" id="vendor-name">Partner Name</div>
-        <div class="col" id="pay-date">Corte Actual</div>
-      </div>
-
-      <!--Highlights Container-->
-      <div class="row highlights-row">
-        <div class="col col-highlights">
-          <h2 id="total-sold">$500</h2>
-          <span>Total vendido este periodo</span>
+      <div class="container-fluid">
+        <!--Info header Container-->
+        <div class="row header-data">
+          <div class="col" id="vendor-name">Partner Name</div>
+          <div class="col" id="pay-date">Corte Actual</div>
         </div>
 
-        <div class="col col-highlights">
-          <h2 id="total-earnings">$500</h2>
-          <span>Ingresos a recibir este periodo</span>
-        </div>
-
-        <div class="col col-highlights">
-          <h2 id="pieces-amount">300</h2>
-          <span>Articulos vendidos</span>
-        </div>
-      </div>
-
-      <!--End Highlights Container-->
-
-      <div class="row m-5"></div>
-
-      <button
-        type="button"
-        class="btn btn-outline-primary active"
-        id="btn-inventory"
-      >
-        Inventario & Ventas del perido
-      </button>
-      <button type="button" class="btn btn-outline-primary" id="btn-historico">
-        Historico de Ventas
-      </button>
-
-      <!--Contenedor de tabla inventario-->
-      <div id="inventory-table-container">
-        <div class="d-flex  bd-highlight">
-          <div class="p-2 bd-highlight">
-            <h2 id="table-title">Inventario y ventas periodo actual</h2>
+        <!--Highlights Container-->
+        <div class="row highlights-row">
+          <div class="col col-highlights">
+            <h2 id="total-sold">$500</h2>
+            <span>Total vendido este periodo</span>
           </div>
 
-          <div class="p-2 bd-highlight">
-            <button
-              type="button"
-              class="btn btn-outline-success"
-              id="refresh-button"
-            >
-              Actualizar
-            </button>
-            <button
-              type="button"
-              class="btn btn-outline-success"
-              id="download-csv-inventory"
-            >
-              CSV
-            </button>
-          </div>
-        </div>
-        <!--FIN Botones-->
-        <div class="scroll-horizontal">
-          <table class="table" id="inventory-table">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">Nombre</th>
-                <th scope="col">Inventario CDMX</th>
-                <th scope="col">Inventario GDL</th>
-                <th scope="col">Piezas Vendidas</th>
-                <th scope="col">Total Vendido</th>
-                <th scope="col">Piezas Vendidas (Histórico)</th>
-              </tr>
-            </thead>
-            <tbody id="table-body-inventory-data">
-              <tr>
-                <td>Cargando...</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <!-- FIN Contenedor de tabla inventario-->
-
-      <!--Contenedor de tabla Ventas historico-->
-      <div id="historico-table-container" class="inactive">
-        <div class="d-flex  bd-highlight">
-          <div class="p-2 bd-highlight">
-            <h2 id="table-title">Historico de ventas por artículo</h2>
+          <div class="col col-highlights">
+            <h2 id="total-earnings">$500</h2>
+            <span>Ingresos a recibir este periodo</span>
           </div>
 
-          <div class="p-2 bd-highlight">
-            <button
-              type="button"
-              class="btn btn-outline-success"
-              id="download-csv-historico"
-            >
-              CSV
-            </button>
+          <div class="col col-highlights">
+            <h2 id="pieces-amount">300</h2>
+            <span>Articulos vendidos</span>
           </div>
         </div>
-        <!--FIN Botones-->
-        <div class="scroll-horizontal">
-          <table class="table" id="historico-table">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">Nombre Producto</th>
-                <th scope="col">Fecha de venta</th>
-                <th scope="col">Cantidad</th>
-                <th scope="col">Precio</th>
-                <th scope="col">Cantidad x Precio</th>
-                <th scope="col">SKU</th>
-                <th scope="col">Ingresos despues de Comisiones</th>
-                <th scope="col">Comision Base</th>
-                <th scope="col">Comision Plan MKT</th>
-              </tr>
-            </thead>
-            <tbody id="table-body-historico-data">
-              <tr>
-                <td>Cargando...</td>
-              </tr>
-            </tbody>
-          </table>
+
+        <!--End Highlights Container-->
+
+        <div class="row m-5"></div>
+
+        <button
+          type="button"
+          class="btn btn-outline-primary active"
+          id="btn-inventory"
+        >
+          Inventario & Ventas del perido
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          id="btn-historico"
+        >
+          Historico de Ventas
+        </button>
+
+        <!--Contenedor de tabla inventario-->
+        <div id="inventory-table-container">
+          <div class="d-flex  bd-highlight">
+            <div class="p-2 bd-highlight">
+              <h2 id="table-title">Inventario y ventas periodo actual</h2>
+            </div>
+
+            <div class="p-2 bd-highlight">
+              <button
+                type="button"
+                class="btn btn-outline-success"
+                id="refresh-button"
+              >
+                Actualizar
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-success"
+                id="download-csv-inventory"
+              >
+                CSV
+              </button>
+            </div>
+          </div>
+          <!--FIN Botones-->
+          <div class="scroll-horizontal">
+            <table class="table" id="inventory-table">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Inventario CDMX</th>
+                  <th scope="col">Inventario GDL</th>
+                  <th scope="col">Piezas Vendidas</th>
+                  <th scope="col">Total Vendido</th>
+                  <th scope="col">Piezas Vendidas (Histórico)</th>
+                </tr>
+              </thead>
+              <tbody id="table-body-inventory-data">
+                <tr>
+                  <td>Cargando...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
+        <!-- FIN Contenedor de tabla inventario-->
+
+        <!--Contenedor de tabla Ventas historico-->
+        <div id="historico-table-container" class="inactive">
+          <div class="d-flex  bd-highlight">
+            <div class="p-2 bd-highlight">
+              <h2 id="table-title">Historico de ventas por artículo</h2>
+            </div>
+
+            <div class="p-2 bd-highlight">
+              <button
+                type="button"
+                class="btn btn-outline-success"
+                id="download-csv-historico"
+              >
+                CSV
+              </button>
+            </div>
+          </div>
+          <!--FIN Botones-->
+          <div class="scroll-horizontal">
+            <table class="table" id="historico-table">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Nombre Producto</th>
+                  <th scope="col">Fecha de venta</th>
+                  <th scope="col">Cantidad</th>
+                  <th scope="col">Precio</th>
+                  <th scope="col">Cantidad x Precio</th>
+                  <th scope="col">SKU</th>
+                  <th scope="col">Ingresos despues de Comisiones</th>
+                  <th scope="col">Comision Base</th>
+                  <th scope="col">Comision Plan MKT</th>
+                </tr>
+              </thead>
+              <tbody id="table-body-historico-data">
+                <tr>
+                  <td>Cargando...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- FIN Contenedor de tabla inventario-->
       </div>
-      <!-- FIN Contenedor de tabla inventario-->
     </div>
 
     <!-- Optional JavaScript -->

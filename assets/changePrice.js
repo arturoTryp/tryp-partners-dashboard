@@ -5,6 +5,8 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const vendorEmail = urlParams.get("vendorEmail");
 const password = urlParams.get("password");
+const tableBody = document.getElementById("table-body-price");
+const sendBtn = document.getElementById("send");
 
 const getVendorsLogin = async (email, password) => {
   const formula = encodeURIComponent(
@@ -30,14 +32,15 @@ const getVariantsTableData = async () => {
   const vendorsObject = await getVendorsLogin(vendorEmail, password);
   const vendorName = vendorsObject["Vendor Name"];
   console.log(vendorName);
-  document.querySelector("h2").innerText = vendorName || null;
+  document.querySelector("h2").innerText =
+    vendorName + " - Cambio de precios" || null;
 
   const formula = encodeURIComponent(
     `AND(FIND('${vendorName}',ARRAYJOIN({Vendor (from Product)}, ",")),IF(FIND('[OFF]',{Variant Label})>0,0,1))`
   );
 
   const sortURL =
-    "&sort%5B0%5D%5Bfield%5D=Piezas+Vendidas+Corte+Actual&sort%5B0%5D%5Bdirection%5D=desc";
+    "&sort%5B0%5D%5Bfield%5D=Variant+Label&sort%5B0%5D%5Bdirection%5D=asc";
 
   let API = `https://api.airtable.com/v0/appsrYW53pV5fd9IT/Variants?fields%5B%5D=Variant+Label&fields%5B%5D=Price&fields%5B%5D=Compare+At+Price&fields%5B%5D=SKU`;
   const formulaURL = `&filterByFormula=${formula}`;
@@ -62,7 +65,7 @@ const getVariantsTableData = async () => {
   return await tableArray;
 };
 
-const drawTable = async () => {
+const drawTable = (async () => {
   const salesArray = await getVariantsTableData();
 
   var formatter = new Intl.NumberFormat("es-MX", {
@@ -70,7 +73,7 @@ const drawTable = async () => {
     currency: "MXN",
   });
 
-  let tableHTML = await salesArray.map((record) => {
+  let tableHTML = await salesArray.map((record, index) => {
     const name = record.fields["Variant Label"];
     const price = formatter.format(record.fields["Price"]);
     const comparePrice =
@@ -83,8 +86,8 @@ const drawTable = async () => {
                 <td>${name}</td>
                 <td>${price}</td>
                 <td>${comparePrice > 0 ? comparePrice : "-"}</td>
-                <td><input type="text" class="form-control" placeholder=""></input></td>
-                <td><input type="text" class="form-control" placeholder=""></input></td>
+                <td><input type="text" id="new-price-${index}" class="form-control" placeholder=""></input></td>
+                <td><input type="text" id="new-compare-price-${index}" class="form-control" placeholder=""></input></td>
             </tr>`;
   });
 
@@ -98,6 +101,45 @@ const drawTable = async () => {
       "table-body-price"
     ).innerHTML = tableHTML.toString();
   }
-};
+})();
 
-drawTable();
+sendBtn.addEventListener("click", (event) => {
+  const updateArray = [];
+
+  for (let i in tableBody.rows) {
+    let updateObject = {
+      sku: null,
+      newPrice: null,
+      newComparePrice: null,
+      productName: null,
+    };
+
+    for (let j in tableBody.rows[i].cells) {
+      if (j == 0) {
+        updateObject.sku = tableBody.rows[i].cells[j].innerText;
+      }
+      if (j == 1) {
+        updateObject.productName = tableBody.rows[i].cells[j].innerText;
+      }
+      if (j == 4) {
+        updateObject.newPrice = document.getElementById(
+          tableBody.rows[i].cells[j].children[0].id
+        ).value;
+      }
+      if (j == 5) {
+        updateObject.newComparePrice = document.getElementById(
+          tableBody.rows[i].cells[j].children[0].id
+        ).value;
+      }
+    }
+
+    updateArray.push(updateObject);
+  }
+
+  const filteredUpdateArray = updateArray.filter(
+    (m) => m.newPrice && m.newComparePrice
+  );
+
+  //Arreglo filtrado con objetos a actualizar: filteredUpdateArray
+  console.log(filteredUpdateArray);
+});
