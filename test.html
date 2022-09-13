@@ -1,0 +1,410 @@
+<div id="description">
+  Vape desechable con concentrado de HHC probado en laboratorio. Inhala y obtén
+  un efecto recreativo potente y euforizante. El hardware del vape tiene una
+  batería recargable y te brinda la sensación y el peso premium que deseas en un
+  desechable.
+</div>
+
+<style type="text/css">
+  .wrapper {
+    max-width: 600px;
+    width: 100%;
+    margin: 4vh auto;
+  }
+
+  .input-acordeon {
+    display: none;
+  }
+
+  .label-acordeon {
+    display: flex;
+    width: 100%;
+    height: 50px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .label-acordeon div:first-child {
+    width: 100%;
+    line-height: 45px;
+    margin-left: 10px;
+    font-size: 16px;
+    color: #2c7733;
+    font-weight: bold;
+  }
+
+  .cross {
+    margin-right: 15px;
+    margin-top: 3px;
+  }
+
+  .cross:before,
+  .cross:after {
+    content: "";
+    border-top: 2px solid #3e474f;
+    width: 15px;
+    display: block;
+    margin-top: 18px;
+    transition: 0.3s;
+  }
+
+  .cross:after {
+    transform: rotate(90deg);
+    margin-top: -2px;
+  }
+
+  #content {
+    box-sizing: border-box;
+    font-size: 0.9em;
+    margin: 10px 10px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height, 0.5s;
+  }
+
+  .input-acordeon:checked ~ #content {
+    max-height: 800px;
+    transition: max-height, 1s;
+  }
+
+  .input-acordeon:checked ~ .label-acordeon .cross:before {
+    transform: rotate(180deg);
+  }
+
+  .input-acordeon:checked ~ .label-acordeon .cross:after {
+    transform: rotate(0deg);
+  }
+
+  .questions {
+    margin-top: 20px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height, 0.5s;
+  }
+
+  .questions .label-acordeon {
+    border: none;
+    box-shadow: none;
+    margin: 0;
+  }
+
+  .input-acordeon:checked ~ .questions {
+    max-height: 400px;
+    border-bottom: 0px solid #ffffff;
+    transition: 1s;
+  }
+
+  #tags-acordeon-1 {
+    background-color: #bcd2c5;
+    color: #2c7733;
+    padding: 4px 17px 4px 17px;
+    text-align: center;
+    font-weight: bold;
+    margin: 5px 5px 5px 5px;
+  }
+
+  #tags-acordeon-2 {
+    background-color: #ebd7c3;
+    color: #724a21;
+    padding: 4px 17px 4px 17px;
+    text-align: center;
+    font-weight: bold;
+    margin: 5px 5px 5px 5px;
+  }
+
+  #tags-acordeon-3 {
+    background-color: #e8e7e2;
+    color: #6c6a5f;
+    padding: 4px 17px 4px 17px;
+    text-align: center;
+    font-weight: bold;
+    margin: 5px 5px 5px 5px;
+  }
+
+  #center-img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: 50px;
+    width: 50px;
+    margin-bottom: -0.5px;
+  }
+
+  #table-data {
+    height: 50px;
+    width: 80px;
+    border: 1px solid #f1f1f1;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    vertical-align: text-top;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  #cannabinoidTitle {
+    color: #2c7733;
+    font-size: 22;
+    font-weight: bolder;
+  }
+
+  #miligramsSpan {
+    color: #293a30;
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .preguntaTitlte {
+    font-size: 15px;
+    color: #293a30;
+  }
+</style>
+
+<div class="wrapper">
+  <div class="wrap-1">
+    <input class="input-acordeon" type="radio" id="tab-1" name="tabs" />
+    <label class="label-acordeon" for="tab-1"
+      ><div>Efectos</div>
+      <div class="cross"></div
+    ></label>
+    <div id="content">
+      <!--EFECTOS TAGS-->
+
+      <span
+        style="font-size: 12px; margin: 8px; color:#beb9a4; font-weight: bolder;"
+        >Efectos principales</span
+      >
+      <br />
+
+      <!-- EFFECTO 1-->
+      <span id="tags-acordeon-1" style="border-radius:15px;">Eufórico</span>
+      <!-- EFFECTO 2-->
+      <span id="tags-acordeon-2" style="border-radius:15px;">Felíz</span>
+      <!-- EFFECTO 3-->
+      <span id="tags-acordeon-3" style="border-radius:15px;">Animado</span>
+
+      <br />
+
+      <!-- FIN EFECTOS TAGS-->
+      <!--TABLA DEL EFECTO PRINCIPAL -->
+      <table>
+        <tr style="border: 1px solid #f1f1f1; border-radius: 20px;">
+          <td style="padding: 15px 15px 15px 15px !important;">
+            <span
+              style=" font-weight: bolder; color: #df1e61; text-align: center; font-size: 20px;"
+              >Recreativo</span
+            >
+            <br />
+            <ul>
+              <li>Efecto psicotrópico potente y euforizante</li>
+              <li>Alto contenido de THC o sus derivados</li>
+              <li>Estimulación del apetito, creatividad y felicidad</li>
+            </ul>
+          </td>
+
+          <td style="margin: 0 10 0 10; text-align: center; width: 40; "></td>
+        </tr>
+      </table>
+
+      <!-- FIN TABLA DEL EFECTO PRINCIPAL -->
+      <br />
+    </div>
+  </div>
+  <!--CANNABINOIDES-->
+  <div class="wrap-2">
+    <input
+      class="input-acordeon"
+      type="radio"
+      id="perfilCannabinoides"
+      name="tabs"
+    />
+    <label class="label-acordeon" for="perfilCannabinoides"
+      ><div>Cannabinoides</div>
+      <div class="cross"></div
+    ></label>
+    <div id="content">
+      <table style="border: 1px solid #f1f1f1;">
+        <tr>
+          <td id="table-data">
+            <span id="cannabinoidTitle">Total</span>
+            <img
+              id="center-img"
+              src="https://dl.airtable.com/.attachments/d4aca994ce75ad62dd9ba2d4e399523c/ef5c68e1/Smallbannershopify1.png"
+            />
+            <br /><br />1000mg
+          </td>
+
+          <td id="table-data">
+            <span id="cannabinoidTitle">HHC</span><br /><br /><br />
+            <span id="miligramsSpan">1000mg</span>
+            <br /><br />por caja
+          </td>
+
+          <td id="table-data">
+            <span id="cannabinoidTitle">THC</span><br /><br /><br />
+            <span id="miligramsSpan">0mg</span>
+            <br /><br />por caja
+          </td>
+
+          <td id="table-data">
+            <span id="cannabinoidTitle">Cantidad</span><br /><br /><br />
+            <span id="miligramsSpan">1</span>
+            <br /><br />piezas por caja
+          </td>
+        </tr>
+      </table>
+
+      <br /><br />
+    </div>
+  </div>
+  <!--FIN--><!-- PERFIL COMPLETO DE CANNABINOIDES-->
+  <div class="wrap-2">
+    <input
+      class="input-acordeon"
+      type="radio"
+      id="completoCannabinoides"
+      name="tabs"
+    />
+    <label class="label-acordeon" for="completoCannabinoides"
+      ><div>Perfil Completo de Cannabinoides</div>
+      <div class="cross"></div
+    ></label>
+    <div id="content">
+      <table>
+        <tr style="border: 1px solid #f1f1f1;">
+          <th>Cannabinoide</th>
+          <th>%</th>
+          <th>mg/pieza</th>
+        </tr>
+
+        <tr style="border: 1px solid #f1f1f1;">
+          <td>HHC</td>
+          <td>100</td>
+          <td>1000mg/pza</td>
+        </tr>
+
+        <tr style="border: 1px solid #f1f1f1;">
+          <td>THC</td>
+          <td>0</td>
+          <td>0mg/pza</td>
+        </tr>
+
+        <tr style="border: 1px solid #f1f1f1;">
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+
+      <br /><br />
+    </div>
+  </div>
+  <!--FIN-->
+  <div class="wrap-3">
+    <input class="input-acordeon" type="radio" id="tab-3" name="tabs" />
+    <label class="label-acordeon" for="tab-3"
+      ><div>Preguntas Frecuentes</div>
+      <div class="cross"></div
+    ></label>
+    <div class="questions">
+      <div class="question-wrap">
+        <input
+          class="input-acordeon"
+          type="radio"
+          id="question-1"
+          name="question"
+        />
+        <label class="label-acordeon" for="question-1"
+          ><div class="preguntaTitlte">
+            <span class="preguntaTitlte">Especificaciones</span>
+          </div>
+          <div class="cross"></div
+        ></label>
+        <div id="content">
+          <b>Indica -</b> Apple Fritter: El buñuelo tiene un aroma terroso, pero
+          tiene sabor a manzana. Te pondrá en un estado de ánimo tranquilo y
+          zen. Genial para un día libre de trabajo. <br /><br />
+          <b>Hybrid -</b> Kush Mints: Ofrece un subidón eufórico con un lado de
+          felicidad. Los efectos se complementan con su sabor y aroma
+          mentolados. <br /><br />
+          <b>Sativa -</b> Amnesia Haze: Variedad perfecta para empezar el día
+          con energía. Perfecto para hacer las cosas sin dejar de sentirse
+          suave. Una hermosa combinación de cítricos y limón.
+        </div>
+      </div>
+      <div class="question-wrap">
+        <input
+          class="input-acordeon"
+          type="radio"
+          id="question-2"
+          name="question"
+        />
+        <label class="label-acordeon" for="question-2"
+          ><div class="preguntaTitlte">
+            <span class="preguntaTitlte">Uso Sugerido </span>
+          </div>
+          <div class="cross"></div
+        ></label>
+        <div id="content">
+          Enciende con 5 clicks <br />
+          Se apaga con 5 clicks <br />
+          Realice una inhalación y espera 10 minutos para considerar si aumentas
+          las inhalaciones <br />
+          Consume a placer
+        </div>
+
+        <div class="question-wrap">
+          <input
+            class="input-acordeon"
+            type="radio"
+            id="question-3"
+            name="question"
+          />
+          <label class="label-acordeon" for="question-3"
+            ><div><span class="preguntaTitlte">¿Qué es el HHC?</span></div>
+            <div class="cross"></div
+          ></label>
+          <div id="content">
+            El HHC tiene efectos similares al THC pero es menos potente que el
+            Delta-8 y presenta un efecto algo euforizante. Como referencia,
+            Delta-8 se considera con la mitad de potencia que el estándar
+            Delta-9.<br />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Aviso Legal-->
+  <div class="wrap-2">
+    <input class="input-acordeon" type="radio" id="avisoLegal" name="tabs" />
+    <label class="label-acordeon" for="avisoLegal"
+      ><div>Aviso Legal</div>
+      <div class="cross"></div
+    ></label>
+    <div id="content">
+      Este producto es un derivado del cáñamo y su concentración de THC es menor
+      al 1% como lo requiere la ley federal. Este producto no es y tampoco debe
+      ser considerado como un medicamento, en virtud de que no esta destinado
+      para diagnosticar, tratar, curar o prevenir ninguna enfermedad, trastorno
+      y/o padecimiento, por tal razón, el producto no cuenta con registro
+      sanitario y tampoco cuenta con evaluación por parte de ninguna autoridad
+      regulatoria. El consumo de este producto es responsabilidad de quien lo
+      usa.
+    </div>
+  </div>
+  <!--fin--><!-- VARIANTES -->
+
+  <div class="wrap-2">
+    <input class="input-acordeon" type="radio" id="variantes" name="tabs" />
+    <label class="label-acordeon" for="variantes"
+      ><div>Variantes</div>
+      <div class="cross"></div
+    ></label>
+    <div id="content"></div>
+  </div>
+  <!--fin VARIANTES-->
+</div>
