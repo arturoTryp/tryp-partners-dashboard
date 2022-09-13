@@ -42,7 +42,7 @@ const getVariantsTableData = async () => {
   const sortURL =
     "&sort%5B0%5D%5Bfield%5D=Variant+Label&sort%5B0%5D%5Bdirection%5D=asc";
 
-  let API = `https://api.airtable.com/v0/appsrYW53pV5fd9IT/Variants?fields%5B%5D=Variant+Label&fields%5B%5D=Price&fields%5B%5D=Compare+At+Price&fields%5B%5D=SKU`;
+  let API = `https://api.airtable.com/v0/appsrYW53pV5fd9IT/tblb2dLlLUseh7sUj?fields%5B%5D=Variant+Label&fields%5B%5D=Price&fields%5B%5D=Compare+At+Price&fields%5B%5D=SKU&fields%5B%5D=%E2%88%9E+Shopify+Id`;
   const formulaURL = `&filterByFormula=${formula}`;
   let urlAPI = API + sortURL + formulaURL;
 
@@ -76,12 +76,12 @@ const drawTable = (async () => {
   let tableHTML = await salesArray.map((record, index) => {
     const name = record.fields["Variant Label"];
     const price = formatter.format(record.fields["Price"]);
-    const comparePrice =
-      formatter.format(record.fields["Compare At Price"]) || null;
-
+    const comparePrice = record.fields["Compare At Price"];
     const sku = record.fields["SKU"];
+    const variantID = record.fields["∞ Shopify Id"];
 
     return `<tr>
+                <th scope="row" style="display:none;">${variantID}</th>
                 <th scope="row">${sku}</th>
                 <td>${name}</td>
                 <td>${price}</td>
@@ -112,21 +112,25 @@ sendBtn.addEventListener("click", (event) => {
       newPrice: null,
       newComparePrice: null,
       productName: null,
+      variantID: null,
     };
 
     for (let j in tableBody.rows[i].cells) {
       if (j == 0) {
-        updateObject.sku = tableBody.rows[i].cells[j].innerText;
+        updateObject.variantID = tableBody.rows[i].cells[j].innerText;
       }
       if (j == 1) {
+        updateObject.sku = tableBody.rows[i].cells[j].innerText;
+      }
+      if (j == 2) {
         updateObject.productName = tableBody.rows[i].cells[j].innerText;
       }
-      if (j == 4) {
+      if (j == 5) {
         updateObject.newPrice = document.getElementById(
           tableBody.rows[i].cells[j].children[0].id
         ).value;
       }
-      if (j == 5) {
+      if (j == 6) {
         updateObject.newComparePrice = document.getElementById(
           tableBody.rows[i].cells[j].children[0].id
         ).value;
@@ -142,4 +146,49 @@ sendBtn.addEventListener("click", (event) => {
 
   //Arreglo filtrado con objetos a actualizar: filteredUpdateArray
   console.log(filteredUpdateArray);
+  sendToReviewAirtable(filteredUpdateArray);
 });
+
+async function sendToReviewAirtable(tableData) {
+  const date = new Date();
+  let data = {
+    records: [],
+  };
+
+  tableData.map((record) => {
+    const temporal = {
+      fields: {
+        variantID: record.variantID,
+        SKU: record.sku,
+        name: record.productName,
+        newPrice: record.newPrice,
+        newCompareAtPrice: record.newComparePrice,
+        createdAt: `${date.getFullYear()}-${date.getUTCMonth() +
+          1}-${date.getDate()}`,
+      },
+    };
+    data.records.push(temporal);
+  });
+
+  const raw = JSON.stringify(data);
+
+  var myHeaders = new Headers();
+  myHeaders.append("Authorization", tkn);
+  myHeaders.append("Content-Type", "application/json");
+
+  const params = { method: "POST", headers: myHeaders, body: raw };
+  const url = "https://api.airtable.com/v0/appvva5paZYhEPUFG/Price%20Review";
+
+  try {
+    const apiResponse = await callAPI(url, params);
+    alert(
+      "Precios mandados a revision. Aguien del equipo de operaicones los estara revisando y actualizando en las proxmas 24 horas hábiles."
+    );
+    location.reload();
+  } catch (error) {
+    alert(
+      "Error al mandar atualizacion de precios. Compartir este mensaje con contacto@tryp.mx. Error: " +
+        error
+    );
+  }
+}
