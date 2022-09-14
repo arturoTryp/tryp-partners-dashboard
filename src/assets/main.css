@@ -276,6 +276,11 @@ td{
         font-size: 12px;
     }
 
+    .graph-container{
+  
+        width: 400px !important;
+    }
+
 
 }
 
@@ -299,4 +304,11 @@ td{
     background-color: var(--verdeTryp) !important;
     
 }
+
+.graph-container{
+  
+    width: 600px;
+}
+
+
 

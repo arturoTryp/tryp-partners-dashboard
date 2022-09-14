@@ -4,6 +4,7 @@ import {
   downloadCSVFile,
   callAPI,
   dateFormat,
+  getMonday,
 } from "./functions.js";
 
 import tkn from "../fonts/aK.js";
@@ -18,6 +19,7 @@ const CVSBtnInventory = document.getElementById("download-csv-inventory");
 const CVSBtnHistorico = document.getElementById("download-csv-historico");
 const refreshBtn = document.getElementById("refresh-button");
 const changePriceLink = document.getElementById("changePriceLink");
+const ctx = document.getElementById("myChart").getContext("2d");
 const token = tkn;
 
 const buttonInventario = document.getElementById("btn-inventory");
@@ -295,24 +297,133 @@ const getHistoricSalesTable = async (vendorNameID) => {
 };
 
 async function graph(AraytableArray) {
-  const dataArray = [];
+  var dataArray = [];
 
   const nuevoArray = AraytableArray.map((m) => {
-    const date = dateFormat(m.fields["Created At"][0], "dd-MM-yyyy");
+    const date = dateFormat(m.fields["Created At"][0], "yyyy-MM-dd");
+    const weekBegin = getMonday(date);
 
     const obj = {
       date: date,
       amount: m.fields["Quantity*Price"],
+      weekBegin: weekBegin,
     };
     dataArray.push(obj);
   });
 
+  dataArray.sort((a, b) => {
+    let da = new Date(a.weekBegin),
+      db = new Date(b.weekBegin);
+    return da - db;
+  });
+
+  console.log("Data Arra Order:");
   console.log(dataArray);
 
-  dataArray.reduce((acc, data) => {
-    // create a composed key: 'year-week'
+  dataArray = await groupArray(dataArray);
 
-    const yearWeek = `${moment(date).year()}-${moment(date).week()}`;
-    console.log(yearWeek);
+  console.log("Data:");
+  console.log(dataArray);
+
+  while (dataArray.length > 15) {
+    dataArray.shift();
+  }
+
+  console.log("Data Shifted:");
+  console.log(dataArray);
+
+  const labels = dataArray.map((d) => d.weekBegin);
+  const dataAmount = dataArray.map((d) => d.amount);
+
+  console.log("Splited Arrays");
+  console.log(labels);
+  console.log(dataAmount);
+
+  let delayed;
+  const myChart = new Chart(ctx, {
+    type: "bar",
+    options: {
+      animation: {
+        onComplete: () => {
+          delayed = true;
+        },
+        delay: (context) => {
+          let delay = 0;
+          if (
+            context.type === "data" &&
+            context.mode === "default" &&
+            !delayed
+          ) {
+            delay = context.dataIndex * 300 + context.datasetIndex * 100;
+          }
+          return delay;
+        },
+      },
+    },
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: "Ventas totales semana",
+          data: dataAmount,
+          backgroundColor: ["rgba(0, 190, 94, 1)", "rgba(41, 58, 48, 1)"],
+          borderColor: ["rgba(0, 190, 94, 1)", "rgba(41, 58, 48, 1)"],
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      animation: {
+        onComplete: () => {
+          delayed = true;
+        },
+        delay: (context) => {
+          let delay = 0;
+          if (
+            context.type === "data" &&
+            context.mode === "default" &&
+            !delayed
+          ) {
+            delay = context.dataIndex * 300 + context.datasetIndex * 100;
+          }
+          return delay;
+        },
+      },
+      plugins: {
+        legend: {
+          labels: {
+            // This more specific font property overrides the global property
+            font: {
+              size: 16,
+              family: "Bw-Gradual-Regular",
+            },
+          },
+        },
+        title: {
+          display: true,
+          text: "Ventas totales por semana (Max 15 semanas)",
+        },
+      },
+      mantainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
   });
+}
+
+async function groupArray(data) {
+  let result = [];
+  data.reduce((res, value) => {
+    if (!res[value.weekBegin]) {
+      res[value.weekBegin] = { weekBegin: value.weekBegin, amount: 0 };
+      result.push(res[value.weekBegin]);
+    }
+    res[value.weekBegin].amount += value.amount;
+    return res;
+  }, {});
+
+  return result;
 }
