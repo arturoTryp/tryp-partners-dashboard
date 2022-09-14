@@ -1,4 +1,4 @@
-import tkn from "../fonts/aK.js";
+import hash from "../fonts/aK.js";
 import { callAPI } from "./functions.js";
 
 const queryString = window.location.search;
@@ -16,7 +16,7 @@ const getVendorsLogin = async (email, password) => {
   const url = `https://api.airtable.com/v0/appsrYW53pV5fd9IT/tble27OyKDjvWH1zH?fields=Email&fields=Net+Vendor+Earnings+Actual+Period&fields=Total+Sold+this+period&fields=Products+Sold+on+Actual+Period&fields=Password&fields=Vendor+Name&filterByFormula=${formula}`;
   const params = {
     method: "GET",
-    headers: { Authorization: tkn },
+    headers: { Authorization: hash },
   };
 
   try {
@@ -46,7 +46,7 @@ const getVariantsTableData = async () => {
   const formulaURL = `&filterByFormula=${formula}`;
   let urlAPI = API + sortURL + formulaURL;
 
-  const params = { method: "GET", headers: { Authorization: tkn } };
+  const params = { method: "GET", headers: { Authorization: hash } };
 
   const apiResponse = await callAPI(urlAPI, params);
 
@@ -173,7 +173,7 @@ async function sendToReviewAirtable(tableData) {
   const raw = JSON.stringify(data);
 
   var myHeaders = new Headers();
-  myHeaders.append("Authorization", tkn);
+  myHeaders.append("Authorization", hash);
   myHeaders.append("Content-Type", "application/json");
 
   const params = { method: "POST", headers: myHeaders, body: raw };
