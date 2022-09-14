@@ -243,6 +243,7 @@ label{
 th{
    font-size: 14px;
    font-family: var(--BwGradualMedium);
+   text-align: center;
 
 }
 
@@ -305,6 +306,29 @@ td{
     border-color: var(--verdeTryp) !important;
     background-color: var(--verdeTryp) !important;
     
+}
+
+.header-nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: white;
+    color: #293A30;
+    margin-top: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+}
+
+
+#table-header{
+    position: -webkit-sticky;
+    position: sticky;
+    top:0;
+    background-color: white;
+    vertical-align: center;
+
+
 }
 
 
