@@ -324,7 +324,7 @@ async function graph(AraytableArray) {
   console.log("Data:");
   console.log(dataArray);
 
-  while (dataArray.length > 15) {
+  while (dataArray.length > 20) {
     dataArray.shift();
   }
 
@@ -400,7 +400,7 @@ async function graph(AraytableArray) {
         },
         title: {
           display: true,
-          text: "Ventas totales por semana (Max 15 semanas)",
+          text: "Ventas totales por semana (Max 20 semanas)",
         },
       },
       mantainAspectRatio: false,

@@ -13,18 +13,15 @@
     />
   </head>
   <body>
-    <div class="container-fluid">
-      <div class="container-fluid p-2 mb-2 bg-light"><h2 class="m-2"></h2></div>
-      
-      <div class="d-flex justify-content-end">
-        <button id="send" type="button" class="btn mb-4 btn-outline-primary" style="color: var(--verdeTryp);">Mandar a revision</button>
-        </div>
+    <div class="container-fluid" id="top-nav">
+      <div class="header-nav">
+        <h2 class="m-2"></h2>
       </div>
     </div>
 
     <div class="container-fluid scroll-horizontal">
       <table class="table ">
-        <thead class="thead-light">
+        <thead class="thead-light" id="table-header">
           <tr>
             <th scope="col" style="display:none;">ID</th>
             <th scope="col">SKU</th>
@@ -33,9 +30,23 @@
             <th scope="col">Precio Comparación</th>
             <th scope="col">Nuevo Precio (Solo numeros enteros)</th>
             <th scope="col">Nuevo Precio Comparación (Solo numeros enteros)</th>
+            <th scope="col">
+              <button
+                id="send"
+                type="button"
+                class="btn mb-4 btn-outline-primary"
+                style="color: var(--verdeTryp); font-size: 13px;"
+              >
+                Mandar a revision
+              </button>
+            </th>
           </tr>
         </thead>
-        <tbody id="table-body-price"><tr><td>Cargando...</td></tr></tbody>
+        <tbody id="table-body-price">
+          <tr>
+            <td>Cargando...</td>
+          </tr>
+        </tbody>
       </table>
     </div>
 
