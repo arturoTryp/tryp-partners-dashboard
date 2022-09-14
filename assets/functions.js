@@ -113,3 +113,13 @@ export function dateFormat(inputDate, format) {
 
   return format;
 }
+
+export function getMonday(d) {
+  d = new Date(d);
+  d.setDate(d.getDate() + 1);
+
+  var day = d.getDay(),
+    diff = d.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+  const firstMonday = new Date(d.setDate(diff));
+  return dateFormat(firstMonday, "yyyy-MM-dd");
+}
