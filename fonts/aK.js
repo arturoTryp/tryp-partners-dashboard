@@ -1,3 +1,3 @@
-const tkn = "Bearer keyGwhp6yd4P08eqe";
+const tkn = "Bearer keyqVvsqb9MB4p1Wn";
 
 export default tkn;
