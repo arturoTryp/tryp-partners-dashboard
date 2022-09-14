@@ -21,7 +21,6 @@ const refreshBtn = document.getElementById("refresh-button");
 const changePriceLink = document.getElementById("changePriceLink");
 const ctx = document.getElementById("myChart").getContext("2d");
 const token = tkn;
-
 const buttonInventario = document.getElementById("btn-inventory");
 const buttonHistoricoVentas = document.getElementById("btn-historico");
 const inventoryTableContainer = document.getElementById(
@@ -267,7 +266,7 @@ buttonHistoricoVentas.addEventListener("click", (e) => {
 
 const getHistoricSalesTable = async (vendorNameID) => {
   const formula = encodeURIComponent(
-    `AND(FIND('${vendorNameID}',ARRAYJOIN({Vendor}, ",")))`
+    `AND(FIND('${vendorNameID}',ARRAYJOIN({Vendor}, ",")),NOT(FIND('prueba',ARRAYJOIN({Tags (from Order)}, ","))))`
   );
 
   const sortURL =
