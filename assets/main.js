@@ -7,7 +7,7 @@ import {
   getMonday,
 } from "./functions.js";
 
-import tkn from "../fonts/aK.js";
+import hash from "../fonts/aK.js";
 
 const loginFormContainer = document.getElementById("login-form-container");
 const form = document.getElementById("login-form");
@@ -20,7 +20,7 @@ const CVSBtnHistorico = document.getElementById("download-csv-historico");
 const refreshBtn = document.getElementById("refresh-button");
 const changePriceLink = document.getElementById("changePriceLink");
 const ctx = document.getElementById("myChart").getContext("2d");
-const token = tkn;
+const token = hash;
 const buttonInventario = document.getElementById("btn-inventory");
 const buttonHistoricoVentas = document.getElementById("btn-historico");
 const inventoryTableContainer = document.getElementById(
