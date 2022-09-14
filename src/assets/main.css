@@ -276,10 +276,12 @@ td{
         font-size: 12px;
     }
 
-    .graph-container{
-  
-        width: 400px !important;
+    .col-8{
+        width: 100% !important;
     }
+
+
+
 
 
 }
@@ -305,10 +307,7 @@ td{
     
 }
 
-.graph-container{
-  
-    width: 600px;
-}
+
 
 
 
