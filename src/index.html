@@ -130,7 +130,7 @@
         font-size: 20px;
         padding: 20px;
         display: flex;
-        justify-content: end !important;
+        justify-content: space-between !important;
         text-align: end;
         margin: 0;
       }
@@ -221,6 +221,7 @@
 
        <div class="col right-container">
          <div class="row header-row">
+           <span id="pay-date">Partners name</span>
            <span id="vendor-name">Partners name</span>
          </div>
 
@@ -228,7 +229,7 @@
            <div class="row highlights-row">
              <div class="col col-highlights">
                <h2 id="total-sold">$500</h2>
-               <span id="pay-date">Total vendido este periodo</span>
+               <span >Total vendido este periodo</span>
              </div>
 
              <div class="col col-highlights">
@@ -244,10 +245,10 @@
            <!--End Highlights Container-->
 
            <!--Graph container-->
-           <div class="container" id="graph-container">
+           <div class="container" id="graph-container" style="background-color: white;">
                <div class="row mt-3 mb-3">
                  <div class="col"></div>
-                 <div class="col-9">
+                 <div class="col-9 p-2">
                    <canvas id="myChart"></canvas>
                  </div>
                  <div class="col"></div>
@@ -295,7 +296,7 @@
            </div>
            <!--FIN Botones-->
            <div class="scroll-horizontal">
-             <table class="table" id="inventory-table">
+             <table class="table table-hover" id="inventory-table">
                <thead class="thead-light">
                  <tr>
                    <th scope="col">Nombre</th>
