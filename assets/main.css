@@ -231,6 +231,11 @@ label{
 
 }
 
+.table-hover{
+    background-color: white;
+    margin-left: -2px;
+}
+
 .table-container{
    margin-top: 100px;
     bottom: 0;
