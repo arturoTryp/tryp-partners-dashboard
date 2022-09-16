@@ -233,7 +233,7 @@ label{
 
 .table-hover{
     background-color: white;
-    margin-left: -2px;
+    margin-left: -5px;
 }
 
 .table-container{
@@ -283,6 +283,13 @@ td{
 
     .col-8{
         width: 100% !important;
+    }
+
+    .nav-menu{
+        display: none;
+    }
+    .main-row{
+        margin: 0;
     }
 
 
