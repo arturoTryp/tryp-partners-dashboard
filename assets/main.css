@@ -33,12 +33,6 @@
 
 }
 
-@font-face {
-  font-family: 'Open Sans';
-  src: url('fonts/OpenSans-Regular.ttf') format('truetype');
-  font-style: normal;
-  font-weight: normal;
-}
 
 body {
     margin: 0;
@@ -338,8 +332,6 @@ td{
     top:0;
     background-color: white;
     vertical-align: center;
-
-
 }
 
 
