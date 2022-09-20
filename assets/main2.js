@@ -318,34 +318,18 @@ async function graph(AraytableArray) {
 
   let delayed;
   const myChart = new Chart(ctx, {
-    type: "bar",
-    options: {
-      animation: {
-        onComplete: () => {
-          delayed = true;
-        },
-        delay: (context) => {
-          let delay = 0;
-          if (
-            context.type === "data" &&
-            context.mode === "default" &&
-            !delayed
-          ) {
-            delay = context.dataIndex * 300 + context.datasetIndex * 100;
-          }
-          return delay;
-        },
-      },
-    },
+    type: "line",
     data: {
       labels: labels,
       datasets: [
         {
-          label: "Ventas totales semana",
+          label: "Ventas por semana",
           data: dataAmount,
-          backgroundColor: ["rgba(0, 190, 94, 1)", "rgba(41, 58, 48, 1)"],
-          borderColor: ["rgba(0, 190, 94, 1)", "rgba(41, 58, 48, 1)"],
+          backgroundColor: "rgba(0, 190, 94, 0.6)",
+          borderColor: "rgba(0, 190, 94, 1)",
           borderWidth: 1,
+          tension: 0.3,
+          fill: false,
         },
       ],
     },
@@ -377,14 +361,23 @@ async function graph(AraytableArray) {
           },
         },
         title: {
-          display: true,
+          display: false,
           text: "Ventas totales por semana (Max 20 semanas)",
         },
       },
       mantainAspectRatio: false,
       scales: {
         y: {
-          beginAtZero: true,
+          grid: {
+            color: "rgba(0, 0, 0, 0)",
+            drawBorder: false,
+          },
+        },
+        x: {
+          grid: {
+            color: "#F1F1F1",
+            drawBorder: false,
+          },
         },
       },
     },
