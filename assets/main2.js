@@ -7,6 +7,8 @@ import {
   getMonday,
 } from "./functions.js";
 
+import { drawTablePrice } from "./changePrice.js";
+
 import hash from "../fonts/aK.js";
 
 const loginFormContainer = document.getElementById("login-form-container");
@@ -28,6 +30,9 @@ const buttonCambiosPrecios = document.getElementById("link-precios");
 const inventoryTableContainer = document.getElementById("inventario-container");
 const resumenContainer = document.getElementById("resumen-container");
 const historicoContainer = document.getElementById("historico-table-container");
+const priceChangeContainer = document.getElementById(
+  "price-change-table-container"
+);
 const vendorEmail = document.getElementById("vendor-email");
 
 //Validacion del Login
@@ -71,12 +76,15 @@ const openAccount = async (vendorObject) => {
     currency: "MXN",
   });
 
+  drawTablePrice(email.value, password.value);
+
   document.getElementById("vendor-name").innerText =
     vendorObject["Vendor Name"];
   document.getElementById("pay-date").innerText = getCurrentPayDate();
-  document.getElementById("total-sold").innerText = `${formatter.format(
-    vendorObject["Total Sold this period"]
-  )}`;
+
+  document.getElementById(
+    "total-sold-highlight"
+  ).innerText = `${formatter.format(vendorObject["Total Sold this period"])}`;
 
   document.getElementById("total-earnings").innerText = `${formatter.format(
     vendorObject["Net Vendor Earnings Actual Period"]
@@ -404,6 +412,7 @@ buttonInventario.addEventListener("click", (e) => {
   buttonCambiosPrecios.classList.remove("activeNav");
   buttonResumen.classList.remove("activeNav");
 
+  priceChangeContainer.classList.add("inactive");
   inventoryTableContainer.classList.remove("inactive");
   historicoContainer.classList.add("inactive");
   resumenContainer.classList.add("inactive");
@@ -419,6 +428,7 @@ buttonResumen.addEventListener("click", (e) => {
   buttonResumen.classList.add("activeNav");
 
   inventoryTableContainer.classList.add("inactive");
+  priceChangeContainer.classList.add("inactive");
   historicoContainer.classList.add("inactive");
   resumenContainer.classList.remove("inactive");
 
@@ -435,6 +445,23 @@ buttonHistoricoVentas.addEventListener("click", (e) => {
   inventoryTableContainer.classList.add("inactive");
   resumenContainer.classList.add("inactive");
   historicoContainer.classList.remove("inactive");
+  priceChangeContainer.classList.add("inactive");
 
   pageTitle.innerText = "Ventas históricas";
+});
+
+// click en Pricechange
+
+buttonCambiosPrecios.addEventListener("click", (e) => {
+  buttonInventario.classList.remove("activeNav");
+  buttonHistoricoVentas.classList.remove("activeNav");
+  buttonCambiosPrecios.classList.add("activeNav");
+  buttonResumen.classList.remove("activeNav");
+
+  inventoryTableContainer.classList.add("inactive");
+  resumenContainer.classList.add("inactive");
+  historicoContainer.classList.add("inactive");
+  priceChangeContainer.classList.remove("inactive");
+
+  pageTitle.innerText = "Cambio de precios";
 });
