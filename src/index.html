@@ -11,7 +11,7 @@
       crossorigin="anonymous"
     />
     <link rel="icon" href="/img/favicon-tryp.png" type="image/x-icon" />
-    <title>Nuevo Layout</title>
+    <title>Dashboard para vendedores</title>
 
     <style>
       .inactive {
@@ -229,6 +229,7 @@
 
       .name-mail-container {
         display: flex;
+        align-items: center;
         height: 100%;
       }
 
@@ -365,7 +366,8 @@
       }
 
       #inventario-container,
-      #historico-table-container {
+      #historico-table-container,
+      #price-change-table-container {
         padding: 0px;
       }
 
@@ -389,9 +391,16 @@
         z-index: 5;
       }
       #download-csv-inventory,
-      #download-csv-historico {
+      #download-csv-historico,
+      #send {
         padding: 5px;
         font-size: 10px;
+        border-color: var(--verdeTryp);
+      }
+
+      #send:hover {
+        background-color: var(--verdeTryp);
+        color: white !important;
       }
 
       @media (max-width: 600px) {
@@ -501,6 +510,7 @@
         </ul>
       </div>
 
+      <!--Resumen-->
       <div class="container-fluid " id="resumen-container">
         <!--Fecha de corte actual-->
         <div class="d-flex flex-row-reverse mt-4">
@@ -511,7 +521,7 @@
         <!-- Highlights-->
         <div class="row highlights-row">
           <div class="col col-highlights">
-            <h2 id="total-sold">$500</h2>
+            <h2 id="total-sold-highlight">$500</h2>
             <span>Ventas periodo actual</span>
           </div>
 
@@ -614,6 +624,44 @@
           </div>
         </div>
       </div>
+
+      <!--Cambio de precio Table-->
+      <div class="container-fluid inactive" id="price-change-table-container">
+        <div class="table-wrapper">
+          <div class="scroll-horizontal">
+            <table class="table ">
+              <thead class="table-header">
+                <tr>
+                  <th scope="col" style="display:none;">ID</th>
+                  <th scope="col">SKU</th>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Precio Actual</th>
+                  <th scope="col">Precio Comparación</th>
+                  <th scope="col">Nuevo Precio (Solo numeros enteros)</th>
+                  <th scope="col">
+                    Nuevo Precio Comparación (Solo numeros enteros)
+                  </th>
+                  <th scope="col">
+                    <button
+                      id="send"
+                      type="button"
+                      class="btn mb-4 btn-outline-primary review-price-btn"
+                      style="color: var(--verdeTryp); font-size: 13px;"
+                    >
+                      Mandar a revision
+                    </button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="table-body-price">
+                <tr>
+                  <td>Cargando...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!--scripts-->
@@ -634,5 +682,6 @@
       crossorigin="anonymous"
     ></script>
     <script type="module" src="./assets/main2.js"></script>
+    <script type="module" src="./assets/changePrice.js"></script>
   </body>
 </html>

@@ -1,10 +1,8 @@
 import hash from "../fonts/aK.js";
 import { callAPI } from "./functions.js";
 
-const queryString = window.location.search;
-const urlParams = new URLSearchParams(queryString);
-const vendorEmail = urlParams.get("vendorEmail");
-const password = urlParams.get("password");
+let vendorEmail;
+let password;
 const tableBody = document.getElementById("table-body-price");
 const sendBtn = document.getElementById("send");
 
@@ -30,10 +28,9 @@ const getVendorsLogin = async (email, password) => {
 
 const getVariantsTableData = async () => {
   const vendorsObject = await getVendorsLogin(vendorEmail, password);
+  console.log("test", vendorEmail);
+
   const vendorName = vendorsObject["Vendor Name"];
-  console.log(vendorName);
-  document.querySelector("h2").innerText =
-    vendorName + " - Cambio de precios" || null;
 
   const formula = encodeURIComponent(
     `AND(FIND('${vendorName}',ARRAYJOIN({Vendor (from Product)}, ",")),IF(FIND('[OFF]',{Variant Label})>0,0,1))`
@@ -65,7 +62,9 @@ const getVariantsTableData = async () => {
   return await tableArray;
 };
 
-const drawTable = (async () => {
+export const drawTablePrice = async (email, pwd) => {
+  vendorEmail = email;
+  password = pwd;
   const salesArray = await getVariantsTableData();
 
   var formatter = new Intl.NumberFormat("es-MX", {
@@ -101,7 +100,7 @@ const drawTable = (async () => {
       "table-body-price"
     ).innerHTML = tableHTML.toString();
   }
-})();
+};
 
 sendBtn.addEventListener("click", (event) => {
   const updateArray = [];
@@ -184,7 +183,6 @@ async function sendToReviewAirtable(tableData) {
     alert(
       "Precios mandados a revision. Aguien del equipo de operaicones los estara revisando y actualizando en las proxmas 24 horas hábiles."
     );
-    location.reload();
   } catch (error) {
     alert(
       "Error al mandar atualizacion de precios. Compartir este mensaje con contacto@tryp.mx. Error: " +
