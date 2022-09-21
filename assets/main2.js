@@ -355,8 +355,8 @@ async function graph(AraytableArray) {
           labels: {
             // This more specific font property overrides the global property
             font: {
-              size: 16,
-              family: "Bw-Gradual-Regular",
+              size: 10,
+              family: "Avenir",
             },
           },
         },
