@@ -383,6 +383,18 @@
         overflow-y: scroll;
       }
 
+      #cambio-precios-table-wrapper {
+        top: 120px;
+      }
+
+      .cambio-precios-review-btn {
+        margin-top: 10px;
+        margin-right: 13px;
+        right: 0;
+        width: fit-content;
+        position: fixed;
+      }
+
       .table-header {
         position: -webkit-sticky;
         position: sticky;
@@ -403,9 +415,16 @@
         color: white !important;
       }
 
-      @media (max-width: 600px) {
+      @media (max-width: 1000px) {
         .left-menu {
           display: none;
+        }
+
+        .table-wrapper {
+          margin-top: 15px;
+          position: fixed;
+          width: 100%;
+          overflow-x: auto;
         }
 
         .container-fluid {
@@ -414,11 +433,6 @@
           left: 0;
           height: calc(100% - 81px);
           width: calc(100%);
-        }
-
-        .left-side span,
-        img {
-          display: none;
         }
       }
     </style>
@@ -627,7 +641,17 @@
 
       <!--Cambio de precio Table-->
       <div class="container-fluid inactive" id="price-change-table-container">
-        <div class="table-wrapper">
+        <div class="row cambio-precios-review-btn">
+          <button
+            id="send"
+            type="button"
+            class="btn mb-4 btn-outline-primary review-price-btn"
+            style="color: white; font-size: 14px; background-color: var(--verdeTryp); font-family: var(--BwGradualRegual);"
+          >
+            Mandar a revision
+          </button>
+        </div>
+        <div class="table-wrapper" id="cambio-precios-table-wrapper">
           <div class="scroll-horizontal">
             <table class="table ">
               <thead class="table-header">
@@ -641,16 +665,7 @@
                   <th scope="col">
                     Nuevo Precio Comparación (Solo numeros enteros)
                   </th>
-                  <th scope="col">
-                    <button
-                      id="send"
-                      type="button"
-                      class="btn mb-4 btn-outline-primary review-price-btn"
-                      style="color: var(--verdeTryp); font-size: 13px;"
-                    >
-                      Mandar a revision
-                    </button>
-                  </th>
+                  <th scope="col"></th>
                 </tr>
               </thead>
               <tbody id="table-body-price">
