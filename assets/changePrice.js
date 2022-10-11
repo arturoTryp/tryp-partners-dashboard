@@ -162,7 +162,7 @@ async function sendToReviewAirtable(tableData) {
         SKU: record.sku,
         name: record.productName,
         newPrice: record.newPrice,
-        newCompareAtPrice: record.newComparePrice,
+        newCompareAtPrice: record.newComparePrice || "0",
         createdAt: `${date.getFullYear()}-${date.getUTCMonth() +
           1}-${date.getDate()}`,
       },
