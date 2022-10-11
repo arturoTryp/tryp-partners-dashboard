@@ -149,6 +149,7 @@ sendBtn.addEventListener("click", (event) => {
 });
 
 async function sendToReviewAirtable(tableData) {
+  console.log(tableData);
   const date = new Date();
   let data = {
     records: [],
@@ -180,6 +181,7 @@ async function sendToReviewAirtable(tableData) {
 
   try {
     const apiResponse = await callAPI(url, params);
+    console.log(apiResponse);
     alert(
       "Precios mandados a revision. Aguien del equipo de operaicones los estara revisando y actualizando en las proxmas 24 horas hábiles."
     );
