@@ -139,9 +139,7 @@ sendBtn.addEventListener("click", (event) => {
     updateArray.push(updateObject);
   }
 
-  const filteredUpdateArray = updateArray.filter(
-    (m) => m.newPrice && m.newComparePrice
-  );
+  const filteredUpdateArray = updateArray.filter((m) => m.newPrice);
 
   //Arreglo filtrado con objetos a actualizar: filteredUpdateArray
   console.log(filteredUpdateArray);
