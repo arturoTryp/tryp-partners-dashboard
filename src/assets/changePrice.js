@@ -130,9 +130,9 @@ sendBtn.addEventListener("click", (event) => {
         ).value;
       }
       if (j == 6) {
-        updateObject.newComparePrice = document.getElementById(
-          tableBody.rows[i].cells[j].children[0].id
-        ).value;
+        updateObject.newComparePrice =
+          document.getElementById(tableBody.rows[i].cells[j].children[0].id)
+            .value || "0";
       }
     }
 
