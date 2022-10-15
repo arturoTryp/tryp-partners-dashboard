@@ -87,7 +87,7 @@ const openAccount = async (vendorObject) => {
   ).innerText = `${formatter.format(vendorObject["Total Sold this period"])}`;
 
   document.getElementById("total-earnings").innerText = `${formatter.format(
-    vendorObject["Net Vendor Earnings Actual Period"]
+    vendorObject["Vendor Payouts After Tax"]
   )}`;
 
   document.getElementById(
@@ -177,14 +177,30 @@ const drawTableHistorico = async (salesArray) => {
 
 //Llamada del API del Login para validar credenciales
 const getVendorsLogin = async (email, password) => {
-  const formula = encodeURIComponent(
-    `AND({Email} = '${email.toLowerCase().trim()}',{Password} = '${password}')`
-  );
+  const formula = `AND({Email} = '${email
+    .toLowerCase()
+    .trim()}',{Password} = '${password}')`;
 
-  const url = `https://api.airtable.com/v0/appsrYW53pV5fd9IT/tble27OyKDjvWH1zH?fields=Email&fields=Net+Vendor+Earnings+Actual+Period&fields=Total+Sold+this+period&fields=Products+Sold+on+Actual+Period&fields=Password&fields=Vendor+Name&filterByFormula=${formula}`;
+  const body = {
+    fields: [
+      "Email",
+      "Net Vendor Earnings Actual Period",
+      "Total Sold this period",
+      "Vendor Payouts After Tax",
+      "Products Sold on Actual Period",
+      "IVA Tax Retention",
+      "ISR Tax Retention",
+      "Password",
+      "Vendor Name",
+    ],
+    filterByFormula: formula,
+  };
+
+  const url = `https://api.airtable.com/v0/appsrYW53pV5fd9IT/tble27OyKDjvWH1zH/listRecords`;
   const params = {
-    method: "GET",
-    headers: { Authorization: token },
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: { Authorization: token, "Content-Type": "application/json" },
   };
 
   try {
@@ -243,31 +259,46 @@ refreshBtn.addEventListener("click", async () => {
 });
 
 const getHistoricSalesTable = async (vendorNameID) => {
-  const formula = encodeURIComponent(
-    `AND(FIND('${vendorNameID}',ARRAYJOIN({Vendor}, ",")),NOT(FIND('prueba',ARRAYJOIN({Tags (from Order)}, ","))))`
-  );
+  const formula = `AND(FIND('${vendorNameID}',ARRAYJOIN({Vendor}, ",")),NOT(FIND('prueba',ARRAYJOIN({Tags (from Order)}, ","))))`;
+  let body = {
+    fields: [
+      "Created At",
+      "Quantity",
+      "Order",
+      "SKU",
+      "Price",
+      "Quantity*Price",
+      "Vendor Net Earnings",
+      "Comision (script)",
+      "MKT Plan Comision",
+      "Name",
+    ],
+    sort: [{ field: "Created At", direction: "desc" }],
+    maxRecords: 3000,
+    offset: "",
+    filterByFormula: formula,
+  };
 
-  const sortURL =
-    "&sort%5B0%5D%5Bfield%5D=Created+At&sort%5B0%5D%5Bdirection%5D=desc";
+  const APIurl = `https://api.airtable.com/v0/appsrYW53pV5fd9IT/tbl4dkYqn9YG4MHar/listRecords`;
+  let params = {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: { Authorization: token, "Content-type": "application/json" },
+  };
 
-  let API = `https://api.airtable.com/v0/appsrYW53pV5fd9IT/tbl4dkYqn9YG4MHar?fields%5B%5D=Created+At&fields%5B%5D=Quantity&fields%5B%5D=Order&fields%5B%5D=Price&fields%5B%5D=Quantity*Price&fields%5B%5D=SKU&fields%5B%5D=Vendor+Net+Earnings&fields%5B%5D=Comision+(script)&fields%5B%5D=MKT+Plan+Comision&fields%5B%5D=Name`;
-  const formulaURL = `&filterByFormula=${formula}`;
-  let urlAPI = API + sortURL + formulaURL;
-
-  const params = { method: "GET", headers: { Authorization: token } };
-
-  const apiResponse = await callAPI(urlAPI, params);
+  const apiResponse = await callAPI(APIurl, params);
 
   let tableArray = await apiResponse.records;
-  let offset = apiResponse.offset || null;
+  body.offset = apiResponse.offset || null;
 
-  while (offset) {
-    const offsetURL = `&offset=${offset}`;
-    urlAPI = API + offsetURL + formulaURL;
-    const apiResponse = await callAPI(urlAPI, params);
-    offset = apiResponse?.offset || null;
+  while (body.offset) {
+    const apiResponse = await callAPI(APIurl, params);
+    body.offset = apiResponse?.offset || null;
+    params.body = JSON.stringify(body);
     await tableArray.push(...apiResponse.records);
   }
+
+  console.log("pruebas", await tableArray);
   graph(tableArray);
 
   return await tableArray;
