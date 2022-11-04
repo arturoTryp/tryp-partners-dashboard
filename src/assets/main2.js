@@ -221,7 +221,7 @@ const getVendorsLogin = async (email, password) => {
 };
 
 const getVendorsInventoryTable = async (vendorID) => {
-  const formula = `AND(FIND('${vendorID}',SKU),IF(FIND('[OFF]',{Variant Label})>0,0,1))`;
+  const formula = `AND(FIND('${vendorID}',{Vendor ID}),IF(FIND('[OFF]',{Variant Label})>0,0,1))`;
 
   let body = {
     fields: [
@@ -283,7 +283,7 @@ refreshBtn.addEventListener("click", async () => {
 });
 
 const getHistoricSalesTable = async (vendorID) => {
-  const formula = `AND(FIND('${vendorID}',SKU),NOT(FIND('prueba',ARRAYJOIN({Tags (from Order)}, ","))))`;
+  const formula = `AND(FIND('${vendorID}',{Vendor ID}),NOT(FIND('prueba',ARRAYJOIN({Tags (from Order)}, ","))))`;
   let body = {
     fields: [
       "Created At",
