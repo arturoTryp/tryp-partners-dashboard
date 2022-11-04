@@ -34,7 +34,7 @@ const getVariantsTableData = async () => {
   console.log("vendor ID price", vendorID);
 
   const formula = encodeURIComponent(
-    `AND(FIND('${vendorID}',SKU),IF(FIND('[OFF]',{Variant Label})>0,0,1))`
+    `AND(FIND('${vendorID}',{Vendor ID}),IF(FIND('[OFF]',{Variant Label})>0,0,1))`
   );
 
   const sortURL =
