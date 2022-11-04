@@ -28,9 +28,9 @@ const getVendorsLogin = async (email, password) => {
 
 const getVariantsTableData = async () => {
   const vendorsObject = await getVendorsLogin(vendorEmail, password);
-  console.log("test", vendorEmail);
 
   const vendorName = vendorsObject["Vendor Name"];
+  console.log("vendor Name", vendorName);
 
   const formula = encodeURIComponent(
     `AND(FIND('${vendorName}',ARRAYJOIN({Vendor (from Product)}, ",")),IF(FIND('[OFF]',{Variant Label})>0,0,1))`

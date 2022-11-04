@@ -161,6 +161,7 @@ const drawTableHistorico = async (salesArray) => {
             <td>${vendorNetErnings}</td>
             <td>${comisionBase}%</td>
             <td>${comisionPlanMKT}%</td>
+            <td>${record.fields["Vendor Payout after Tax Retentions"]}%</td>
           </tr>`;
   });
   try {
@@ -213,28 +214,43 @@ const getVendorsLogin = async (email, password) => {
 };
 
 const getVendorsInventoryTable = async (vendorNameID) => {
-  const formula = encodeURIComponent(
-    `AND(FIND('${vendorNameID}',ARRAYJOIN({Vendor (from Product)}, ",")),IF(FIND('[OFF]',{Variant Label})>0,0,1))`
-  );
+  const formula = `AND(FIND('${vendorNameID}',ARRAYJOIN({Vendor (from Product)}, ",")),IF(FIND('[OFF]',{Variant Label})>0,0,1))`;
 
-  const sortURL =
-    "&sort%5B0%5D%5Bfield%5D=Piezas+Vendidas+Corte+Actual&sort%5B0%5D%5Bdirection%5D=desc";
+  let body = {
+    fields: [
+      "Variant Label",
+      "Inventario Tryp Now",
+      "Inventario GDL",
+      "SKU",
+      "Total Sales (Periodo Actual)",
+      "Price",
+      "Total Vendidos (Historico)",
+      "Vendor (from Product)",
+      "Piezas Vendidas Corte Actual",
+    ],
+    sort: [{ field: "Piezas Vendidas Corte Actual", direction: "desc" }],
+    maxRecords: 3000,
+    offset: "",
+    filterByFormula: formula,
+  };
 
-  let API = `https://api.airtable.com/v0/appsrYW53pV5fd9IT/tblb2dLlLUseh7sUj?fields%5B%5D=Variant+Label&fields%5B%5D=Inventario+Tryp+Now&fields%5B%5D=Inventario+GDL&fields%5B%5D=Total+Sales+(Periodo+Actual)&fields%5B%5D=SKU&fields%5B%5D=Price&fields%5B%5D=Total+Vendidos+(Historico)&fields%5B%5D=Vendor+(from+Product)&fields%5B%5D=Piezas+Vendidas+Corte+Actual`;
-  const formulaURL = `&filterByFormula=${formula}`;
-  let urlAPI = API + sortURL + formulaURL;
+  let APIurl = `https://api.airtable.com/v0/appsrYW53pV5fd9IT/tblb2dLlLUseh7sUj/listRecords`;
 
-  const params = { method: "GET", headers: { Authorization: token } };
+  const params = {
+    method: "POST",
+    headers: { Authorization: token, "Contente-type": "application/json" },
+    body: JSON.stringify(body),
+  };
 
-  const apiResponse = await callAPI(urlAPI, params);
+  const apiResponse = await callAPI(APIurl, params);
 
   let tableArray = await apiResponse.records;
-  let offset = apiResponse.offset || null;
+  body.offset = apiResponse.offset || null;
 
-  while (offset) {
-    const offsetURL = `&offset=${offset}`;
-    urlAPI = API + offsetURL + formulaURL;
-    const apiResponse = await callAPI(urlAPI, params);
+  while (body.offset) {
+    body.offset = apiResponse?.offset || null;
+    params.body = JSON.stringify(body);
+    const apiResponse = await callAPI(APIurl, params);
     offset = apiResponse?.offset || null;
     await tableArray.push(...apiResponse.records);
   }
@@ -272,6 +288,7 @@ const getHistoricSalesTable = async (vendorNameID) => {
       "Comision (script)",
       "MKT Plan Comision",
       "Name",
+      "Vendor Payout after Tax Retentions",
     ],
     sort: [{ field: "Created At", direction: "desc" }],
     maxRecords: 3000,
