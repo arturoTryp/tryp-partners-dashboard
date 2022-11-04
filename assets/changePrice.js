@@ -185,4 +185,6 @@ async function sendToReviewAirtable(tableData) {
       );
     }
   });
+
+  alert("Precios mandados a revision");
 }
