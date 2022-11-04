@@ -96,7 +96,7 @@ const openAccount = async (vendorObject) => {
 
   let vendorsInventoryTableArray = [];
   vendorsInventoryTableArray = await getVendorsInventoryTable(
-    vendorObject["Vendor Name"]
+    vendorObject["Vendor ID"]
   );
 
   let tableHTML = "";
@@ -109,6 +109,7 @@ const openAccount = async (vendorObject) => {
 
     return `<tr>
         <th scope="row">${record.fields["Variant Label"]}</th>
+        <td>${record.fields["SKU"]}</td>
         <td>${inventarioCDMX}</td>
         <td>${inventarioGDL}</td>
         <td>${record.fields["Piezas Vendidas Corte Actual"]}</td>
@@ -129,7 +130,7 @@ const openAccount = async (vendorObject) => {
   }
 
   let vendorsHistoricoSalesTable = await getHistoricSalesTable(
-    vendorObject["Vendor Name"]
+    vendorObject["Vendor ID"]
   );
 
   drawTableHistorico(await vendorsHistoricoSalesTable);
@@ -143,6 +144,9 @@ const drawTableHistorico = async (salesArray) => {
 
   let tableHTML = salesArray.map((record) => {
     const precio = formatter.format(record.fields["Price"]);
+    const erningsAfterTaxes = formatter.format(
+      record.fields["Vendor Payout after Tax Retentions"]
+    );
     const cantidadXPrecio = formatter.format(record.fields["Quantity*Price"]);
     const comisionBase = record.fields["Comision (script)"] * 100;
     const comisionPlanMKT = record.fields["MKT Plan Comision"] * 100;
@@ -161,7 +165,7 @@ const drawTableHistorico = async (salesArray) => {
             <td>${vendorNetErnings}</td>
             <td>${comisionBase}%</td>
             <td>${comisionPlanMKT}%</td>
-            <td>${record.fields["Vendor Payout after Tax Retentions"]}%</td>
+            <td>${erningsAfterTaxes}</td>
           </tr>`;
   });
   try {
@@ -193,6 +197,7 @@ const getVendorsLogin = async (email, password) => {
       "ISR Tax Retention",
       "Password",
       "Vendor Name",
+      "Vendor ID",
     ],
     filterByFormula: formula,
   };
@@ -213,8 +218,8 @@ const getVendorsLogin = async (email, password) => {
   }
 };
 
-const getVendorsInventoryTable = async (vendorNameID) => {
-  const formula = `AND(FIND('${vendorNameID}',ARRAYJOIN({Vendor (from Product)}, ",")),IF(FIND('[OFF]',{Variant Label})>0,0,1))`;
+const getVendorsInventoryTable = async (vendorID) => {
+  const formula = `AND(FIND('${vendorID}',SKU),IF(FIND('[OFF]',{Variant Label})>0,0,1))`;
 
   let body = {
     fields: [
@@ -242,16 +247,17 @@ const getVendorsInventoryTable = async (vendorNameID) => {
     body: JSON.stringify(body),
   };
 
-  const apiResponse = await callAPI(APIurl, params);
+  let apiResponse = await callAPI(APIurl, params);
 
   let tableArray = await apiResponse.records;
+  console.log("test", apiResponse.offset);
   body.offset = apiResponse.offset || null;
 
   while (body.offset) {
-    body.offset = apiResponse?.offset || null;
     params.body = JSON.stringify(body);
-    const apiResponse = await callAPI(APIurl, params);
-    offset = apiResponse?.offset || null;
+    let apiResponse = await callAPI(APIurl, params);
+    const offset = apiResponse?.offset || null;
+    body.offset = offset || null;
     await tableArray.push(...apiResponse.records);
   }
 
@@ -274,8 +280,8 @@ refreshBtn.addEventListener("click", async () => {
   maintContainer.classList.toggle("inactive");
 });
 
-const getHistoricSalesTable = async (vendorNameID) => {
-  const formula = `AND(FIND('${vendorNameID}',ARRAYJOIN({Vendor}, ",")),NOT(FIND('prueba',ARRAYJOIN({Tags (from Order)}, ","))))`;
+const getHistoricSalesTable = async (vendorID) => {
+  const formula = `AND(FIND('${vendorID}',SKU),NOT(FIND('prueba',ARRAYJOIN({Tags (from Order)}, ","))))`;
   let body = {
     fields: [
       "Created At",

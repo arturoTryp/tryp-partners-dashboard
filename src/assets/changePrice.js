@@ -11,7 +11,7 @@ const getVendorsLogin = async (email, password) => {
     `AND({Email} = '${email.toLowerCase().trim()}',{Password} = '${password}')`
   );
 
-  const url = `https://api.airtable.com/v0/appsrYW53pV5fd9IT/tble27OyKDjvWH1zH?fields=Email&fields=Net+Vendor+Earnings+Actual+Period&fields=Total+Sold+this+period&fields=Products+Sold+on+Actual+Period&fields=Password&fields=Vendor+Name&filterByFormula=${formula}`;
+  const url = `https://api.airtable.com/v0/appsrYW53pV5fd9IT/tble27OyKDjvWH1zH?fields=Email&fields=Net+Vendor+Earnings+Actual+Period&fields=Vendor+ID&fields=Total+Sold+this+period&fields=Products+Sold+on+Actual+Period&fields=Password&fields=Vendor+Name&filterByFormula=${formula}`;
   const params = {
     method: "GET",
     headers: { Authorization: hash },
@@ -30,7 +30,8 @@ const getVariantsTableData = async () => {
   const vendorsObject = await getVendorsLogin(vendorEmail, password);
 
   const vendorName = vendorsObject["Vendor Name"];
-  console.log("vendor Name", vendorName);
+  const vendorID = vendorsObject["Vendor ID"];
+  console.log("vendor ID price", vendorID);
 
   const formula = encodeURIComponent(
     `AND(FIND('${vendorName}',ARRAYJOIN({Vendor (from Product)}, ",")),IF(FIND('[OFF]',{Variant Label})>0,0,1))`
