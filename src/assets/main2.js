@@ -238,7 +238,7 @@ const getVendorsInventoryTable = async (vendorNameID) => {
 
   const params = {
     method: "POST",
-    headers: { Authorization: token, "Contente-type": "application/json" },
+    headers: { Authorization: token, "Content-type": "application/json" },
     body: JSON.stringify(body),
   };
 
