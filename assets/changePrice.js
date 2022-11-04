@@ -150,11 +150,12 @@ sendBtn.addEventListener("click", (event) => {
 async function sendToReviewAirtable(tableData) {
   console.log(tableData);
   const date = new Date();
-  let data = {
-    records: [],
-  };
 
-  tableData.map((record) => {
+  tableData.map(async (record) => {
+    let data = {
+      records: [],
+    };
+
     const temporal = {
       fields: {
         variantID: record.variantID,
@@ -166,28 +167,22 @@ async function sendToReviewAirtable(tableData) {
           1}-${date.getDate()}`,
       },
     };
+
     data.records.push(temporal);
+    const raw = JSON.stringify(data);
+
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", hash);
+    myHeaders.append("Content-Type", "application/json");
+    const params = { method: "POST", headers: myHeaders, body: raw };
+    const url = "https://api.airtable.com/v0/appvva5paZYhEPUFG/Price%20Review";
+    try {
+      const apiResponse = await callAPI(url, params);
+      console.log(apiResponse);
+    } catch (error) {
+      alert(
+        "Error al actualizar precio, porfavor avisa de esto a contacto@tryp.mx"
+      );
+    }
   });
-
-  const raw = JSON.stringify(data);
-
-  var myHeaders = new Headers();
-  myHeaders.append("Authorization", hash);
-  myHeaders.append("Content-Type", "application/json");
-
-  const params = { method: "POST", headers: myHeaders, body: raw };
-  const url = "https://api.airtable.com/v0/appvva5paZYhEPUFG/Price%20Review";
-
-  try {
-    const apiResponse = await callAPI(url, params);
-    console.log(apiResponse);
-    alert(
-      "Precios mandados a revision. Aguien del equipo de operaicones los estara revisando y actualizando en las proxmas 24 horas hábiles."
-    );
-  } catch (error) {
-    alert(
-      "Error al mandar atualizacion de precios. Compartir este mensaje con contacto@tryp.mx. Error: " +
-        error
-    );
-  }
 }
