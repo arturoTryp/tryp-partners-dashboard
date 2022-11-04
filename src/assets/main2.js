@@ -39,6 +39,8 @@ const vendorEmail = document.getElementById("vendor-email");
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
+  console.log("Last update 3 nov 2022");
+
   if (email.value && password.value) {
     const vendorObject = await getVendorsLogin(email.value, password.value);
 
